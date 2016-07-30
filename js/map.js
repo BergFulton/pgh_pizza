@@ -12,43 +12,50 @@ function initMap() {
   });
 }
 
-//Some pizza places
+//Some pizza places- only the best!
 var locations = [{
-  title: 'Fior\'s',
-  location: {
-    lat: 40.4053055,
-    lng: -80.019612
-  }, {
-    title: 'Franks\'s',
-    location: {
-    lat: 40.5882699,
-    lng: -80.2267282
-  }, {
-    title: 'Police Station Pizza',
-    location: {
-    lat: 40.5918369,
-    lng: -80.2325444
-  }, {
-    title: 'Beto\'s',
-    location: {
-    lat: 40.4127159,
-    lng: -80.0325241
-  }, {
-    title: 'Aiello\'s',
-    location: {
-    lat: 40.4332582,
-    lng: -79.9253431
-  }, {
-    title: 'Mineo\'s',
-    location: {
-    lat: 40.4328888,
-    lng: -79.9253663
-  }, {
-    title: 'Spak Bros',
-    location: {
-      lat: 40.4650793, 
-      lng: -79.9447003
-    }
-  }
-
-}]
+                title: 'Fior\'s',
+                location: {
+                  lat: 40.4127159,
+                  lng: -80.0325241
+                }
+            }, {
+                title: 'Franks',
+                location: {
+                  lat: 40.5882699,
+                  lng: -80.2267282
+                }
+            }, {
+                title: 'Police Station Pizza',
+                location: {
+                  lat: 40.5918369,
+                  lng: -80.2325444
+                }
+            }, {
+                title: 'Beto\'s',
+                location: {
+                  lat: 40.4127159,
+                  lng: -80.0325241
+                }
+            }, {
+                title: 'Aiello\'s',
+                location: {
+                  lat: 40.4332582,
+                  lng: -79.9253431
+            }, {
+                title: 'Mineo\'s',
+                location: {
+                  lat: 40.4328888,
+                  lng: -79.9253663
+            }, {
+                title: 'Spak Bros.',
+                location: {
+                  lat: 40.4328888,
+                  lng: -79.9253663
+            }, {
+                title: 'Ephesus',
+                location: {
+                  lat: 40.4398797,
+                  lng: -80.0045522
+                },
+            }];
