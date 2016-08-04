@@ -115,4 +115,24 @@ function initMap() {
             this.setIcon(defaultIcon);
         });
     }
+
+    var pizzaListView = {
+      init: function() {
+        // this.pizzaListElem = $('.locations-list');
+        this.render();
+      }
+      // render: function() {
+      //   var pizzaList = octopus.getDogs();
+      //   this.pizzaListElem.html('');
+      //   for (var i = 0; i < locations.length; i++) {
+      //     var pizzaLoc = locations[i];
+      //     // var elem = $('<li />');
+      //     elem.text(locations.title);
+      //       }
+      //     }(locations));
+
+      //     this.pizzaListElem.append(elem);
+      //   }
+      // }
+    };
 }
