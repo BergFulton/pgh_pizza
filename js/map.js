@@ -2,20 +2,9 @@ var map;
 
 var markers = [];
 
-//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: 40.440625,
-            lng: -79.995886
-        },
-        zoom: 13,
-        mapTypeControl: false
-    });
-
 
     //Some pizza places- only the best!
-    var locations = [{
+    var pizzaLocations = [{
         title: 'Fior\'s',
         location: {
             lat: 40.4127159,
@@ -65,6 +54,48 @@ function initMap() {
         }
     }];
 
+    //Apply Knockout.js bindings to Pizza data.
+var Pizza = function(data){
+    // this.clickCount = ko.observable(data.clickCount);
+    this.title = ko.observable(data.title);
+    // this.imgSrc = ko.observable(data.imgSrc);
+    // this.imgAttribution = ko.observable(data.imgAttribution);
+    // this.nicknames = ko.observableArray(data.nicknames);
+    };
+
+    var ViewModel = function(){
+    var self = this;
+
+    this.pizzaList = ko.observableArray([]);
+
+    pizzaLocations.forEach(function(pizzaItem){
+        self.pizzaList.push( new Pizza(pizzaItem) );
+    })
+
+    // this.currentDog = ko.observable( this.dogList()[0]);
+
+    // this.setDog = function(clickedDog){
+    //     self.currentDog(clickedDog);
+    // }
+    
+    // this.incrementCounter = function() {
+    //     this.clickCount(this.clickCount() + 1);
+    // };
+}   
+
+ko.applyBindings(new ViewModel());
+
+//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 40.440625,
+            lng: -79.995886
+        },
+        zoom: 13,
+        mapTypeControl: false
+    });
+
     //Set default marker icon
     var defaultIcon = makeMarkerIcon('0091ff');
 
@@ -82,10 +113,10 @@ function initMap() {
     }
 
     //Loop through the locations array
-    for (var i = 0; i < locations.length; i++) {
+    for (var i = 0; i < pizzaLocations.length; i++) {
         //get the lat/lng for each item
-        var position = locations[i].location;
-        var title = locations[i].title;
+        var position = pizzaLocations[i].location;
+        var title = pizzaLocations[i].title;
         //place a marker on each location
         var marker = new google.maps.Marker({
             position: position,
@@ -116,23 +147,4 @@ function initMap() {
         });
     }
 
-    var pizzaListView = {
-      init: function() {
-        // this.pizzaListElem = $('.locations-list');
-        this.render();
-      }
-      // render: function() {
-      //   var pizzaList = octopus.getDogs();
-      //   this.pizzaListElem.html('');
-      //   for (var i = 0; i < locations.length; i++) {
-      //     var pizzaLoc = locations[i];
-      //     // var elem = $('<li />');
-      //     elem.text(locations.title);
-      //       }
-      //     }(locations));
 
-      //     this.pizzaListElem.append(elem);
-      //   }
-      // }
-    };
-}

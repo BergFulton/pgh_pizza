@@ -13,11 +13,14 @@
       <h1>Welcome to the Pittsburgh Pizza Map!</h1>
       <h2>Featuring only the best independent Pittsburgh pizzas</h2>
     </div>
-    <div id="map"></div>
-    <div class="locations-list">
-      <ul class="list">
-      </ul>
+    <div id = "list">
+      <ul data-bind= "foreach: pizzaList">
+        <li data-bind="text: title"></li>
+    </ul>
+    </di>
+    <div id="map">
     </div>
+    <script src="js/lib/knockout-3.2.0.js"></script>
     <script src="js/map.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=AIzaSyDbhQUVvTyLIEJ-qGSCXpnA3fV1_HDJ-yo&v=3&callback=initMap">
     </script>
