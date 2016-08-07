@@ -132,6 +132,9 @@ function initMap() {
             this.setIcon(defaultIcon);
         });
 
+         //This is the autocomplete for use in the search within time field
+            var timeAutocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('pizza-search'));
         //Search for Places data based on the input of the user. 
         function textSearchPlaces(){
           var bounds = map.getBounds();
