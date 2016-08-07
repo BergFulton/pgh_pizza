@@ -5,50 +5,50 @@ var markers = [];
 
     //Some pizza places- only the best!
     var pizzaLocations = [{
-        title: 'Fior\'s',
-        location: {
+        'title': 'Fior\'s',
+        'location': {
             lat: 40.4127159,
             lng: -80.0325241
         }
     }, {
-        title: 'Franks',
-        location: {
+        'title': 'Franks',
+        'location': {
             lat: 40.5882699,
             lng: -80.2267282
         }
     }, {
-        title: 'Police Station Pizza',
-        location: {
+        'title': 'Police Station Pizza',
+        'location': {
             lat: 40.5918369,
             lng: -80.2325444
         }
     }, {
-        title: 'Beto\'s',
-        location: {
+        'title': 'Beto\'s',
+        'location': {
             lat: 40.4127159,
             lng: -80.0325241
         }
     }, {
-        title: 'Aiello\'s',
-        location: {
+        'title': 'Aiello\'s',
+        'location': {
             lat: 40.4332582,
             lng: -79.9253431
         }
     }, {
-        title: 'Mineo\'s',
-        location: {
+        'title': 'Mineo\'s',
+        'location': {
             lat: 40.4328888,
             lng: -79.9253663
         }
     }, {
-        title: 'Spak Bros.',
-        location: {
+        'title': 'Spak Bros.',
+        'location': {
             lat: 40.4328888,
             lng: -79.9253663
         }
     }, {
-        title: 'Ephesus',
-        location: {
+        'title': 'Ephesus',
+        'location': {
             lat: 40.4398797,
             lng: -80.0045522
         }
@@ -56,11 +56,7 @@ var markers = [];
 
     //Apply Knockout.js bindings to Pizza data.
 var Pizza = function(data){
-    // this.clickCount = ko.observable(data.clickCount);
     this.title = ko.observable(data.title);
-    // this.imgSrc = ko.observable(data.imgSrc);
-    // this.imgAttribution = ko.observable(data.imgAttribution);
-    // this.nicknames = ko.observableArray(data.nicknames);
     };
 
     var ViewModel = function(){
@@ -71,16 +67,6 @@ var Pizza = function(data){
     pizzaLocations.forEach(function(pizzaItem){
         self.pizzaList.push( new Pizza(pizzaItem) );
     })
-
-    // this.currentDog = ko.observable( this.dogList()[0]);
-
-    // this.setDog = function(clickedDog){
-    //     self.currentDog(clickedDog);
-    // }
-    
-    // this.incrementCounter = function() {
-    //     this.clickCount(this.clickCount() + 1);
-    // };
 }   
 
 ko.applyBindings(new ViewModel());
@@ -146,5 +132,4 @@ function initMap() {
             this.setIcon(defaultIcon);
         });
     }
-
-
+}
