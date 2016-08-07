@@ -55,7 +55,7 @@ var markers = [];
     }];
 
     //Apply Knockout.js bindings to Pizza data.
-var Pizza = function(data){
+    var Pizza = function(data){
     this.title = ko.observable(data.title);
     };
 
@@ -131,5 +131,69 @@ function initMap() {
         marker.addListener('mouseout', function() {
             this.setIcon(defaultIcon);
         });
+
+        //Search for Places data based on the input of the user. 
+        function textSearchPlaces(){
+          var bounds = map.getBounds();
+          hideMarkers(placeMarkers);
+          var placesService = new google.maps.places.PlacesService(map);
+          placesService.textSearch({
+            query: document.getElementById('pizza-search').value,
+            bounds: bounds
+          }, function(results, status){
+            if (status === google.maps.places.PlacesServiceStatus.OK){
+              createMarkersForPlaces(results);
+            }
+          });
+        }
+
+        //This function creates markers for each place found in 
+        //places search.
+        function createMarkersForPlaces(places){
+          var bounds = new google.maps.LatLngBounds();
+          for (var i = 0; i < places.length; i++){
+            var place = places[i];
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(35, 35),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(15, 15),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            //Create a marker for each place. 
+            var marker = new google.maps.Marker({
+              map: map,
+              icon: icon, 
+              title: place.name,
+              position: place.geometry.location,
+              id: place.id
+            });
+
+            //Create a single infowindow to be used with the place detail. 
+            //Allow only 1 to be open at a time.
+            var placeInfoWindow = new google.maps.InfoWindow();
+            //If a marker is clicked, do a place details search on 
+            //it in the next function.
+            marker.addListener('click', function(){
+                console.log("yep, i'm clicked");
+                console.log(this);
+                console.log(placeInfoWindow.marker);
+              if (placeInfoWindow.marker == this){
+                console.log("This infowindow is already on this marker!");
+              } else {
+                getPlacesDetails(this, placeInfoWindow);
+              }
+            })
+            placeMarkers.push(marker);
+            if (place.geometry.viewport){
+              //Only geocodes have viewports. Apparently.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          }
+          map.fitBounds(bounds);
+        }
     }
 }

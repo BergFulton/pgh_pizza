@@ -13,10 +13,17 @@
       <h1>Welcome to the Pittsburgh Pizza Map!</h1>
       <h2>Featuring only the best independent Pittsburgh pizzas</h2>
     </div>
+    <div id = "searches">
+      <input id="pizza-search" type="text" placeholder="Where yinz wanna go?">
+      <input id="get-pizza" type="button" value="Go">
+
+    </div>
+
     <div id = "list">
       <ul data-bind= "foreach: pizzaList">
         <li data-bind="text: title"></li>
       </ul>
+       <input id="hide-listings" type="button" value="Get aht">
     </div>
     <div id="map"></div>
     <script src="js/lib/knockout-3.2.0.js"></script>
