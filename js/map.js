@@ -82,10 +82,10 @@ function initMap() {
         mapTypeControl: false
     });
 
-    //Set default marker icon
+    //Set default marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
 
-    //Set highlighted marker icon
+    //Set highlighted marker icon color
     var highlightedIcon = makeMarkerIcon('FFFF24');
 
     //Create marker icons for use in the default icon and highlighted icon
@@ -118,10 +118,10 @@ function initMap() {
         // To add the marker to the map, call setMap();
         marker.setMap(map);
 
-        //Create an onclick event to open the infowindow.
-        marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-        });
+        // //Create an onclick event to open the infowindow.
+        // marker.addListener('click', function() {
+        //     populateInfoWindow(this, largeInfowindow);
+        // });
 
         //Two event listeners - one for mouseover, one for mouseout- changes colors of icon.
         marker.addListener('mouseover', function() {
@@ -132,13 +132,22 @@ function initMap() {
             this.setIcon(defaultIcon);
         });
 
-         //This is the autocomplete for use in the search within time field
-            var timeAutocomplete = new google.maps.places.Autocomplete(
+        //This is the autocomplete for use in the search within time field
+        var timeAutocomplete = new google.maps.places.Autocomplete(
                 document.getElementById('pizza-search'));
+
+        var searchBox = new google.maps.places.SearchBox(
+                document.getElementById('pizza-search'));
+
+         //Listen for the event fired when the user selects a prediction 
+         //and then clicks "go". Then get more details about the place
+            document.getElementById('get-pizza').
+            addEventListener('click', textSearchPlaces);
+
         //Search for Places data based on the input of the user. 
         function textSearchPlaces(){
           var bounds = map.getBounds();
-          hideMarkers(placeMarkers);
+          //hideMarkers(placeMarkers);
           var placesService = new google.maps.places.PlacesService(map);
           placesService.textSearch({
             query: document.getElementById('pizza-search').value,
@@ -148,6 +157,19 @@ function initMap() {
               createMarkersForPlaces(results);
             }
           });
+        }
+
+
+        //This function fires when the user selects a searchbox picklist
+        //item. It will do a nearby search using the selected query. 
+        function searchBoxPlaces(searchBox){
+          hideMarkers(placeMarkers);
+          var places = searchBox.getPlaces();
+          //For each place, get the icon, name, and location.
+          createMarkersForPlaces(places);
+          if (places.length == 0){
+            window.alert('We did not find any places matching that search.');
+          }
         }
 
         //This function creates markers for each place found in 
@@ -176,12 +198,10 @@ function initMap() {
             //Create a single infowindow to be used with the place detail. 
             //Allow only 1 to be open at a time.
             var placeInfoWindow = new google.maps.InfoWindow();
+            
             //If a marker is clicked, do a place details search on 
             //it in the next function.
             marker.addListener('click', function(){
-                console.log("yep, i'm clicked");
-                console.log(this);
-                console.log(placeInfoWindow.marker);
               if (placeInfoWindow.marker == this){
                 console.log("This infowindow is already on this marker!");
               } else {
