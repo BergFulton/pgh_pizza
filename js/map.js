@@ -88,6 +88,10 @@ function initMap() {
     //Set highlighted marker icon color
     var highlightedIcon = makeMarkerIcon('FFFF24');
 
+    //Set icon color for a user-submitted entry
+    var userSubIcon = makeMarkerIcon('FFA500');
+
+
     //Create marker icons for use in the default icon and highlighted icon
     function makeMarkerIcon(markerColor) {
       var markerImage = new google.maps.MarkerImage('http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor + '|40|_|%E2%80%A2',
@@ -189,7 +193,7 @@ function initMap() {
             //Create a marker for each place. 
             var marker = new google.maps.Marker({
               map: map,
-              icon: icon, 
+              icon: userSubIcon, 
               title: place.name,
               position: place.geometry.location,
               id: place.id
