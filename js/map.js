@@ -1,9 +1,9 @@
 //Global variables
 var map;
 
-var markers = [];
+var markers = ko.observableArray([]);
 
-var placeMarkers = [];
+var placeMarkers = ko.observableArray([]);
 
 
 //Some pizza places- only the best!
@@ -12,49 +12,57 @@ var pizzaLocations = [{
     'location': {
         lat: 40.4127159,
         lng: -80.0325241
-    }
+    },
+    'info': "A little greasy, but a Pittsburgh favorite. Also: pinball!"
 }, {
     'title': 'Franks',
     'location': {
         lat: 40.5882699,
         lng: -80.2267282
-    }
+    },
+    'info': "Because putting the cheese on top is boring. Cash only."
 }, {
     'title': 'Police Station Pizza',
     'location': {
         lat: 40.5918369,
         lng: -80.2325444
-    }
+    },
+    'info': "By the slice, and know how many slices you need before you hit the door. Cash only."
 }, {
     'title': 'Beto\'s',
     'location': {
         lat: 40.4127159,
         lng: -80.0325241
-    }
+    },
+    'info': "Who needs their cheese melted? Not you!"
 }, {
     'title': 'Aiello\'s',
     'location': {
         lat: 40.4332582,
         lng: -79.9253431
-    }
+    },
+    'info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely."
 }, {
     'title': 'Mineo\'s',
     'location': {
         lat: 40.4328888,
         lng: -79.9253663
-    }
+    },
+    'info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely."
 }, {
     'title': 'Spak Bros.',
     'location': {
         lat: 40.4328888,
         lng: -79.9253663
-    }
+    },
+    'info': "Need some seitan wings with your pizza? Plays Fugazi's 'Waiting Room' as their hold music."
 }, {
     'title': 'Ephesus',
     'location': {
         lat: 40.4398797,
         lng: -80.0045522
-    }
+    },
+    'info': "One of a very few local pizza joints in downtown."
 }];
 
 //Apply Knockout.js bindings to Pizza data.
