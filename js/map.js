@@ -166,9 +166,13 @@ function initMap() {
             }
         }
 
-        //This is the autocomplete for use in the search within time field
+        //This is the autocomplete for use in the search box to add new places
         var timeAutocomplete = new google.maps.places.Autocomplete(
             document.getElementById('pizza-search'));
+        //This is the autocomplete for use in getting directions...can this 
+        //be added to above?
+        var timeAutocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('search-within-time-text'));
 
         var searchBox = new google.maps.places.SearchBox(
             document.getElementById('pizza-search'));
