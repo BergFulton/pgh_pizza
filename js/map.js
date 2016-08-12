@@ -9,65 +9,103 @@ var placeMarkers = ko.observableArray([]);
 //Some pizza places- only the best!
 var pizzaLocations = [{
     'title': 'Fior\'s',
+    'address': '103 Capital Ave, Pittsburgh, PA 15226',
+    'phone': '412-343-7788',
+    'site': 'http://www.fiorispizzaria.com',
+    'cash_only': 'cash only',
+    'inside_info': "A little greasy, but a Pittsburgh favorite. Also: pinball!",
     'location': {
         lat: 40.4127159,
         lng: -80.0325241
-    },
-    'info': "A little greasy, but a Pittsburgh favorite. Also: pinball!"
+    }
 }, {
     'title': 'Franks',
+    'address': '618 Duss Ave, Ambridge, PA 15003',
+    'phone': '724-266-2890',
+    'site': 'http://www.franks-pizzeria.com',
+    'cash_only': 'cash only',
+    'inside_info': "Because putting the cheese on top is boring.",
     'location': {
         lat: 40.5882699,
         lng: -80.2267282
-    },
-    'info': "Because putting the cheese on top is boring. Cash only."
+    }
 }, {
     'title': 'Police Station Pizza',
+    'address': '618 Duss Ave, Ambridge, PA 15003',
+    'phone': '724-266-3904',
+    'site': '',
+    'cash_only': 'cash only',
+    'inside_info': "By the slice, and know how many slices you need before you hit the door. Cash only.",
     'location': {
         lat: 40.5918369,
         lng: -80.2325444
-    },
-    'info': "By the slice, and know how many slices you need before you hit the door. Cash only."
+    }
 }, {
     'title': 'Beto\'s',
+    'address': '1473 Banksville Rd, Pittsburgh, PA 15216',
+    'phone': '412-561-0121',
+    'site': '',
+    'cash_only': 'accepts cards',
+    'inside_info': "Who says the cheese has to be melted?",
     'location': {
         lat: 40.4127159,
         lng: -80.0325241
-    },
-    'info': "Who needs their cheese melted? Not you!"
+    }
+   
 }, {
     'title': 'Aiello\'s',
+    'address': '2112 Murray Ave, Pittsburgh, PA 15217',
+    'phone': '412-521-9973',
+    'site': 'http://www.aiellospizza.com',
+    'cash_only': 'accepts cards',
+    'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
     'location': {
         lat: 40.4332582,
         lng: -79.9253431
-    },
-    'info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely."
+    }
 }, {
     'title': 'Mineo\'s',
+     'address': '2128 Murray Ave, Pittsburgh, PA 15217',
+    'phone': '412-521-9864',
+    'site': 'http://www.mineospizza.com',
+    'cash_only': 'accepts cards',
+    'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
     'location': {
         lat: 40.4328888,
         lng: -79.9253663
-    },
-    'info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely."
+    }
 }, {
     'title': 'Spak Bros.',
+    'address': '5107 Penn Ave, Pittsburgh, PA 15224',
+    'phone': '412-362-7725',
+    'site': 'http://www.spakbrothers.com',
+    'cash_only': 'accepts cards',
+    'inside_info': "Need some seitan wings with your pizza? Plays Fugazi's 'Waiting Room' as their hold music.",
     'location': {
-        lat: 40.4328888,
-        lng: -79.9253663
-    },
-    'info': "Need some seitan wings with your pizza? Plays Fugazi's 'Waiting Room' as their hold music."
+        lat: 40.4650793,
+        lng: -79.9447056
+    }
 }, {
     'title': 'Ephesus',
+    'address': '219 Fourth Ave, Pittsburgh, PA 15222',
+    'phone': '412-552-9020',
+    'site': 'http://www.ephesuspizza.com',
+    'cash_only': 'accepts cards',
+    'inside_info': "One of a very few local pizza joints in downtown.",
     'location': {
         lat: 40.4398797,
         lng: -80.0045522
-    },
-    'info': "One of a very few local pizza joints in downtown."
+    }
 }];
 
 //Apply Knockout.js bindings to Pizza data.
 var Pizza = function(data) {
     this.title = ko.observable(data.title);
+    this.address = ko.observable(data.address);
+    this.phone = ko.observable(data.phone)
+    this.site = ko.observable(data.site);
+    this.cash_only = ko.observable(data.cash_only);
+    this.inside_info = ko.observable(data.inside_info);
 };
 
 var ViewModel = function() {
