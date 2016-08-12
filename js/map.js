@@ -119,7 +119,7 @@ var ViewModel = function() {
         self.pizzaList.push(new Pizza(pizzaItem));
     });
 
-        //Set default marker icon color
+    //Set default map marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
 
     //Set highlighted marker icon color
