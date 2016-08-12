@@ -313,7 +313,6 @@ var ViewModel = function() {
                     window.alert('Directions request failed due to ' + status);
                 }
             });
-        }
 }
 
 ko.applyBindings(new ViewModel());
@@ -328,4 +327,5 @@ function initMap() {
         zoom: 13,
         mapTypeControl: false
     });
+}
 
