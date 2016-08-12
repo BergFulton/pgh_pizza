@@ -77,23 +77,9 @@ var ViewModel = function() {
 
     pizzaLocations.forEach(function(pizzaItem) {
         self.pizzaList.push(new Pizza(pizzaItem));
-    })
-}
-
-ko.applyBindings(new ViewModel());
-
-//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: 40.440625,
-            lng: -79.995886
-        },
-        zoom: 13,
-        mapTypeControl: false
     });
 
-    //Set default marker icon color
+        //Set default marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
 
     //Set highlighted marker icon color
@@ -294,51 +280,7 @@ function initMap() {
             }
         }
 
-         //This function checks the results--if the distance is less 
-        //than the value in the picker, then show it on the map.
-        function displayMarkersWithinTime(response) {
-            var maxDuration = document.getElementById('max-duration').value;
-            var origins = response.originAddresses;
-            var destinations = response.destinationAddresses;
-            // Parse the results, and get distance and duration of each.
-            // Because there might be multiple origins and //destinations, we have a nested loop. Then make sure that //at least 1 result was found. 
-            var atLeastOne = false;
-            for (var i = 0; i < origins.length; i++) {
-                var results = response.rows[i].elements;
-                for (var j = 0; j < results.length; j++) {
-                    var element = results[j];
-                    if (element.status === "OK") {
-                        //The distance is returned in feet, but the text is 
-                        //in miles. If we wanted to show the function to 
-                        //show markers within a user-specified distance, we 
-                        //would need the value for distance, but for now we 
-                        //only need the text. 
-                        var distanceText = element.distance.text;
-                        //Duration is given in seconds, so convert it to minutes. 
-                        var duration = element.duration.value / 60;
-                        var durationText = element.duration.text;
-                        if (duration <= maxDuration) {
-                            //the origin[i] shoulld = the markers[i]
-                            markers[i].setMap(map);
-                            atLeastOne = true;
-                            //Create a mini infowindow to open immediately //containing the distance and duration
-                            var infowindow = new google.maps.InfoWindow({
-                                content: durationText + ' away, ' + distanceText +
-                                    '<div><input type=\"button\" value=\"View Route\" onclick=' +
-                                    '\"displayDirections(&quot;' + origins[i] + '&quot;);\"></input></div>'
-                            });
-                            infowindow.open(map, markers[i]);
-                            //If the user clicks the marker, the small window 
-                            //closes, and the larger infowindow opens.
-                            markers[i].infowindow = infowindow;
-                            google.maps.event.addListener(markers[i], 'click', function() {
-                                this.infowindow.close();
-                            });
-                        }
-                    }
-                }
-            }
-        }
+        
 
 
         //This function is in reponse to the user selecting "show 
@@ -372,3 +314,18 @@ function initMap() {
                 }
             });
         }
+}
+
+ko.applyBindings(new ViewModel());
+
+//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 40.440625,
+            lng: -79.995886
+        },
+        zoom: 13,
+        mapTypeControl: false
+    });
+
