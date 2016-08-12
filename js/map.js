@@ -315,7 +315,7 @@ var ViewModel = function() {
             });
 }
 
-ko.applyBindings(new ViewModel());
+
 
 //Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
 function initMap() {
@@ -325,7 +325,8 @@ function initMap() {
             lng: -79.995886
         },
         zoom: 13,
-        mapTypeControl: false
+        mapTypeControl: true
     });
+    ko.applyBindings(new ViewModel());
 }
 
