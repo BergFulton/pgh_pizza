@@ -1,12 +1,12 @@
 //Global variables
 var map;
 
-var markers = ko.observableArray([]);
+var markers = [];
 
-var placeMarkers = ko.observableArray([]);
+var placeMarkers = [];
 
 
-//Some pizza places- only the best!
+//Some pizza places- only the best! This is the model.
 var pizzaLocations = [{
     'title': 'Fiori\'s',
     'address': '103 Capital Ave, Pittsburgh, PA 15226',
@@ -98,18 +98,20 @@ var pizzaLocations = [{
     }
 }];
 
-//Apply Knockout.js bindings to Pizza data.
-var Pizza = function(data) {
+
+
+var ViewModel = function() {
+    var self = this;
+
+    //Apply Knockout.js bindings to Pizza data.
+    var Pizza = function(data) {
     this.title = ko.observable(data.title);
     this.address = ko.observable(data.address);
     this.phone = ko.observable(data.phone)
     this.site = ko.observable(data.site);
     this.cash_only = ko.observable(data.cash_only);
     this.inside_info = ko.observable(data.inside_info);
-};
-
-var ViewModel = function() {
-    var self = this;
+    };
 
     this.pizzaList = ko.observableArray([]);
 
