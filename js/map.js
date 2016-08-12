@@ -8,7 +8,7 @@ var placeMarkers = ko.observableArray([]);
 
 //Some pizza places- only the best!
 var pizzaLocations = [{
-    'title': 'Fior\'s',
+    'title': 'Fiori\'s',
     'address': '103 Capital Ave, Pittsburgh, PA 15226',
     'phone': '412-343-7788',
     'site': 'http://www.fiorispizzaria.com',

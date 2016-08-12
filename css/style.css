@@ -11,3 +11,7 @@ h1, h2 {
 #map {
 	height: 100%;
 }
+
+li {
+	list-style: none;
+}
