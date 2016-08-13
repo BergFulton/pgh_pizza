@@ -16,6 +16,24 @@ h1, h2 {
 	right: 0px;
 }
 
+.searches {
+	background: #fff;
+ 	line-height: 35px;
+ 	padding: 10px 10px 30px 10px;
+ 	text-align: center;
+ 	width: 340px;
+}
+
+.banner{
+	background: yellow;
+ 	border: 1px solid #999;
+ 	border-radius: 4px;
+ 	line-height: 35px;
+ 	padding: 10px 10px 30px 10px;
+ 	text-align: center;
+ 	width: 340px;
+}
+
 li {
 	list-style: none;
 }

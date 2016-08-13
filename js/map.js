@@ -111,6 +111,9 @@ var ViewModel = function() {
     this.site = ko.observable(data.site);
     this.cash_only = ko.observable(data.cash_only);
     this.inside_info = ko.observable(data.inside_info);
+    this.listLink = ko.computed(function(){
+        return "<a href=' + this.site() '>this.title()</a>";
+    }, this);
     };
 
     this.pizzaList = ko.observableArray([]);
@@ -364,7 +367,7 @@ function initMap() {
             lat: 40.440625,
             lng: -79.995886
         },
-        zoom: 13,
+        zoom: 10,
         mapTypeControl: true
     });
     ko.applyBindings(new ViewModel());
