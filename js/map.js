@@ -286,15 +286,15 @@ var ViewModel = function() {
     }
 }
 
-//This function allows the user to input a desired travel time and travel mode, and a location. It will only show places that are reachable within the desired travel duration period. 
-        function searchWithinTime() {
-
-            //This is the function to hide all listings
+     //This is the function to hide all listings
             function hideMarkers(markers) {
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
         }
+
+//This function allows the user to input a desired travel time and travel mode, and a location. It will only show places that are reachable within the desired travel duration period. 
+        function searchWithinTime() {
             //Initialize the distance matrix service
             var distanceMatrixServce = new google.maps.DistanceMatrixService;
             var address = document.getElementById('search-within-time-text').value;
