@@ -17,9 +17,6 @@
   </div>
   <hr>
     <div class = "searches">
-      <!-- remove search boxes not using
-      <input id="pizza-search" type="text" placeholder="Where yinz wanna go?">
-      <input id="get-pizza" type="button" value="Go">
        <span class="text">Find Pizza Within</span>
             <select id="max-duration">
                 <option value="10">10 min</option>
@@ -37,18 +34,18 @@
             <span class="text">of</span>
             <input id="search-within-time-text" type="text" placeholder="ex: Kennywood Park or 4400 Forbes Ave.">
             <input id="search-within-time" type="button" value="Go">
-        </div> -->
+        </div>
 
         <!-- input box added for text filter.  Use texInput binding because it automatically updates -->
         <input id="search-pizza" data-bind="textInput: query" type="text" placeholder="Filter">
       </div>
     <div id = "list">
       <ul data-bind= "foreach: pizzaList">
-        <li data-bind="click: $parent.openWindow">
+        <li data-bind="text: title, click: $parent.openWindow">
           <!-- show individual data items -->
-          <div data-bind="text: title"></div>
+          <!-- <div data-bind="text: title"></div>
           <div data-bind="text: address"></div>
-          <div data-bind="text: phone"></div>
+          <div data-bind="text: phone"></div> -->
           <hr>
         </li>
       </ul>
