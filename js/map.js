@@ -1,9 +1,10 @@
 //Global variables
 var map;
+var infowindow;     // create global infowindow ********************************
 
-var markers = [];
-
-var placeMarkers = [];
+// remove variables not needed *************************************************
+//var markers = [];
+//var placeMarkers = [];
 
 
 //Some pizza places- only the best! This is the model.
@@ -51,7 +52,7 @@ var pizzaLocations = [{
         lat: 40.4127159,
         lng: -80.0325241
     }
-   
+
 }, {
     'title': 'Aiello\'s',
     'address': '2112 Murray Ave, Pittsburgh, PA 15217',
@@ -103,14 +104,20 @@ var pizzaLocations = [{
 var ViewModel = function() {
     var self = this;
 
-    //Apply Knockout.js bindings to Pizza data.
+    // add variable to hold text input value ***********************************
+    self.query = ko.observable();
+
+    // items in constructor do not need to be observables because they don't
+    // change after they are set ***********************************************
     var Pizza = function(data) {
-    this.title = ko.observable(data.title);
-    this.address = ko.observable(data.address);
-    this.phone = ko.observable(data.phone)
-    this.site = ko.observable(data.site);
-    this.cash_only = ko.observable(data.cash_only);
-    this.inside_info = ko.observable(data.inside_info);
+      this.title = data.title;
+      this.address = data.address;
+      this.phone = data.phone;
+      this.site = data.site;
+      this.cash_only = data.cash_only;
+      this.inside_info = data.inside_info;
+      // add the location data so that you can create a marker with pizzaList***
+      this.location = data.location;
     };
 
     this.pizzaList = ko.observableArray([]);
@@ -139,11 +146,11 @@ var ViewModel = function() {
         return markerImage;
     }
 
-    //Loop through the locations array
-    for (var i = 0; i < pizzaLocations.length; i++) {
+    // change to loop through the self.pizzaList() array ***********************
+    for (var i = 0; i < self.pizzaList().length; i++) {
         //get the lat/lng for each item
-        var position = pizzaLocations[i].location;
-        var title = pizzaLocations[i].title;
+        var position = self.pizzaList()[i].location; // change to pizzaList ****
+        var title = self.pizzaList()[i].title;       // change to pizzaList ****
         //place a marker on each location
         var marker = new google.maps.Marker({
             position: position,
@@ -153,16 +160,11 @@ var ViewModel = function() {
             id: i
         });
 
-        //Push the marker to our array of markers.
-        markers.push(marker);
+        // no longer needed since markers are properties of locations **********
+        //markers.push(marker);
 
         // To add the marker to the map, call setMap();
         marker.setMap(map);
-
-        // //Create an onclick event to open the infowindow.
-        // marker.addListener('click', function() {
-        //     populateInfoWindow(this, largeInfowindow);
-        // });
 
         //Two event listeners - one for mouseover, one for mouseout- changes colors of icon.
         marker.addListener('mouseover', function() {
@@ -173,8 +175,26 @@ var ViewModel = function() {
             this.setIcon(defaultIcon);
         });
 
+        // add listener to set infowindow content and set open *****************
+        marker.addListener('click', function() {
+            infowindow.setContent(this.title)
+            infowindow.open(map, this )
+        });
 
-        //Event listeners for button interactions
+        // set marker as a property of pizzaList location **********************
+        self.pizzaList()[i].marker = marker;
+
+    } // moved closing bracket here ********************************************
+
+
+    // function to trigger marker click when list view item is clicked *********
+    self.openWindow = function(location) {
+      google.maps.event.trigger( location.marker,'click');
+    }
+} // end ViewModel *************************************************************
+
+// comment out code not needed
+/*        //Event listeners for button interactions
         document.getElementById('hide-listings').addEventListener('click',
             function() {
                 hideMarkers(markers);
@@ -185,7 +205,7 @@ var ViewModel = function() {
                 searchWithinTime();
             });
 
-        //Listen for the event fired when the user selects a prediction 
+        //Listen for the event fired when the user selects a prediction
         //and then clicks "go". Then get more details about the place
         document.getElementById('get-pizza').
         addEventListener('click', textSearchPlaces);
@@ -200,7 +220,7 @@ var ViewModel = function() {
         //This is the autocomplete for use in the search box to add new places
         var timeAutocomplete = new google.maps.places.Autocomplete(
             document.getElementById('pizza-search'));
-        //This is the autocomplete for use in getting directions...can this 
+        //This is the autocomplete for use in getting directions...can this
         //be added to above?
         var timeAutocomplete = new google.maps.places.Autocomplete(
             document.getElementById('search-within-time-text'));
@@ -209,7 +229,7 @@ var ViewModel = function() {
             document.getElementById('pizza-search'));
 
 
-        //Search for Places data based on the input of the user. 
+        //Search for Places data based on the input of the user.
         function textSearchPlaces() {
             var bounds = map.getBounds();
             hideMarkers(placeMarkers);
@@ -226,7 +246,7 @@ var ViewModel = function() {
 
 
         //This function fires when the user selects a searchbox picklist
-        //item. It will do a nearby search using the selected query. 
+        //item. It will do a nearby search using the selected query.
         function searchBoxPlaces(searchBox) {
             hideMarkers(placeMarkers);
             var places = searchBox.getPlaces();
@@ -237,7 +257,7 @@ var ViewModel = function() {
             }
         }
 
-        //This function creates markers for each place found in 
+        //This function creates markers for each place found in
         //places search.
         function createMarkersForPlaces(places) {
             var bounds = new google.maps.LatLngBounds();
@@ -251,7 +271,7 @@ var ViewModel = function() {
                     scaledSize: new google.maps.Size(25, 25)
                 };
 
-                //Create a marker for each place. 
+                //Create a marker for each place.
                 var marker = new google.maps.Marker({
                     map: map,
                     icon: userSubIcon,
@@ -260,11 +280,11 @@ var ViewModel = function() {
                     id: place.id
                 });
 
-                //Create a single infowindow to be used with the place detail. 
+                //Create a single infowindow to be used with the place detail.
                 //Allow only 1 to be open at a time.
                 var placeInfoWindow = new google.maps.InfoWindow();
 
-                //If a marker is clicked, do a place details search on 
+                //If a marker is clicked, do a place details search on
                 //it in the next function.
                 marker.addListener('click', function() {
                     if (placeInfoWindow.marker == this) {
@@ -283,7 +303,7 @@ var ViewModel = function() {
             }
             map.fitBounds(bounds);
         }
-    }
+
 }
 
      //This is the function to hide all listings
@@ -293,7 +313,7 @@ var ViewModel = function() {
             }
         }
 
-//This function allows the user to input a desired travel time and travel mode, and a location. It will only show places that are reachable within the desired travel duration period. 
+//This function allows the user to input a desired travel time and travel mode, and a location. It will only show places that are reachable within the desired travel duration period.
         function searchWithinTime() {
             //Initialize the distance matrix service
             var distanceMatrixServce = new google.maps.DistanceMatrixService;
@@ -327,27 +347,27 @@ var ViewModel = function() {
             }
         }
 
-//This function checks the results--if the distance is less 
+//This function checks the results--if the distance is less
         //than the value in the picker, then show it on the map.
         function displayMarkersWithinTime(response) {
             var maxDuration = document.getElementById('max-duration').value;
             var origins = response.originAddresses;
             var destinations = response.destinationAddresses;
             // Parse the results, and get distance and duration of each.
-            // Because there might be multiple origins and //destinations, we have a nested loop. Then make sure that //at least 1 result was found. 
+            // Because there might be multiple origins and //destinations, we have a nested loop. Then make sure that //at least 1 result was found.
             var atLeastOne = false;
             for (var i = 0; i < origins.length; i++) {
                 var results = response.rows[i].elements;
                 for (var j = 0; j < results.length; j++) {
                     var element = results[j];
                     if (element.status === "OK") {
-                        //The distance is returned in feet, but the text is 
-                        //in miles. If we wanted to show the function to 
-                        //show markers within a user-specified distance, we 
-                        //would need the value for distance, but for now we 
-                        //only need the text. 
+                        //The distance is returned in feet, but the text is
+                        //in miles. If we wanted to show the function to
+                        //show markers within a user-specified distance, we
+                        //would need the value for distance, but for now we
+                        //only need the text.
                         var distanceText = element.distance.text;
-                        //Duration is given in seconds, so convert it to minutes. 
+                        //Duration is given in seconds, so convert it to minutes.
                         var duration = element.duration.value / 60;
                         var durationText = element.duration.text;
                         if (duration <= maxDuration) {
@@ -361,7 +381,7 @@ var ViewModel = function() {
                                     '\"displayDirections(&quot;' + origins[i] + '&quot;);\"></input></div>'
                             });
                             infowindow.open(map, markers[i]);
-                            //If the user clicks the marker, the small window 
+                            //If the user clicks the marker, the small window
                             //closes, and the larger infowindow opens.
                             markers[i].infowindow = infowindow;
                             google.maps.event.addListener(markers[i], 'click', function() {
@@ -372,10 +392,10 @@ var ViewModel = function() {
                 }
             }
         }
-        
 
 
-        //This function is in reponse to the user selecting "show 
+
+        //This function is in reponse to the user selecting "show
         //route" on one of the markers iwthin the caluclated distance.
         //This will display the route on the map
         function displayDirections(origin) {
@@ -407,7 +427,7 @@ var ViewModel = function() {
             });
 }
 
-
+*/
 
 //Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
 function initMap() {
@@ -419,6 +439,8 @@ function initMap() {
         zoom: 10,
         mapTypeControl: true
     });
+
+    // create global infowindow ************************************************
+    infowindow = new google.maps.InfoWindow();
     ko.applyBindings(new ViewModel());
 }
-
