@@ -1,10 +1,6 @@
 //Global variables
 var map;
-var infowindow;     // create global infowindow ********************************
-
-// remove variables not needed *************************************************
-//var markers = [];
-//var placeMarkers = [];
+var infowindow;     // create global infowindow 
 
 
 //Some pizza places- only the best! This is the model.
@@ -104,11 +100,10 @@ var pizzaLocations = [{
 var ViewModel = function() {
     var self = this;
 
-    // add variable to hold text input value ***********************************
+    // add variable to hold text input value 
     self.query = ko.observable();
 
-    // items in constructor do not need to be observables because they don't
-    // change after they are set ***********************************************
+    //Pizza constructor
     var Pizza = function(data) {
       this.title = data.title;
       this.address = data.address;
@@ -116,7 +111,7 @@ var ViewModel = function() {
       this.site = data.site;
       this.cash_only = data.cash_only;
       this.inside_info = data.inside_info;
-      // add the location data so that you can create a marker with pizzaList***
+      // add the location data so that you can create a marker with pizzaList
       this.location = data.location;
     };
 
@@ -146,11 +141,11 @@ var ViewModel = function() {
         return markerImage;
     }
 
-    // change to loop through the self.pizzaList() array ***********************
+    //Loop through the self.pizzaList() array
     for (var i = 0; i < self.pizzaList().length; i++) {
         //get the lat/lng for each item
-        var position = self.pizzaList()[i].location; // change to pizzaList ****
-        var title = self.pizzaList()[i].title;       // change to pizzaList ****
+        var position = self.pizzaList()[i].location;
+        var title = self.pizzaList()[i].title;       
         //place a marker on each location
         var marker = new google.maps.Marker({
             position: position,
@@ -159,9 +154,6 @@ var ViewModel = function() {
             animation: google.maps.Animation.DROP,
             id: i
         });
-
-        // no longer needed since markers are properties of locations **********
-        //markers.push(marker);
 
         // To add the marker to the map, call setMap();
         marker.setMap(map);
@@ -175,23 +167,54 @@ var ViewModel = function() {
             this.setIcon(defaultIcon);
         });
 
-        // add listener to set infowindow content and set open *****************
+        // add listener to set infowindow content and set open
         marker.addListener('click', function() {
             infowindow.setContent(this.title)
             infowindow.open(map, this )
         });
 
-        // set marker as a property of pizzaList location **********************
+        // set marker as a property of pizzaList location 
         self.pizzaList()[i].marker = marker;
 
-    } // moved closing bracket here ********************************************
+    }
 
 
     // function to trigger marker click when list view item is clicked *********
     self.openWindow = function(location) {
       google.maps.event.trigger( location.marker,'click');
     }
-} // end ViewModel *************************************************************
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// end ViewModel *************************************************************
 
 // comment out code not needed
 /*        //Event listeners for button interactions
