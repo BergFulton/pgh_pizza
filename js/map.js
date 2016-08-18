@@ -138,6 +138,29 @@ var ViewModel = function() {
         var fqLng = pizzaLocation.location.lng;
         fourSqURL = 'https://api.foursquare.com/v2/venues/explore' + '?client_id=' + clientID + '&client_secret=' + clientSecret + '&v=' + fqVersion + '&ll=' + fqLat + ',' + fqLng + '&limit=50';
 
+        //AJAX request
+         $.ajax({
+            url: fourSqUrl,
+            datatype: "jsonp",
+            success: function(response) {
+                resp = response.response.groups[0].items[0].venue;
+                console.log(resp);
+                //Build infoWindow content string with data from API Request
+                infoWindow.setContent('<a href="' + location.fourSqUrl + '">' + resp.name + '</a>' + '<br>' + location.phone + '<br>' + location.address + '<br>' + resp.location.city + ', ' + resp.location.state + ' ' + resp.location.postalCode + '<br>' + location.description + '<br>'  + '<a href="' + location.website + '">' + location.website + '</a>' + '<br>' + '<a href="' + location.twitterLink + '">' + '@' + location.twitter + '</a>');
+                
+                infoWindow.open(map, location.marker); //open the info window
+            }, // Error method to be run if request fails
+            error: function(fourSqUrl, errorMsg) {
+                setTimeout(function() { // Display error after 2 seconds if Request to API fails
+                    if (errorMsg) {
+                        infoWindow.setContent("I'm sorry, an error has occurred. Please try again later.");
+                        infoWindow.open(map, location.marker);
+                    }
+                }, 2000);
+            }
+            
+        });
+
     }
 
     //Set default map marker icon color
