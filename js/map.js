@@ -103,6 +103,7 @@ var ViewModel = function() {
     // add variable to hold text input value 
     self.query = ko.observable();
 
+
     //Pizza constructor
     var Pizza = function(data) {
       this.title = data.title;
@@ -120,6 +121,24 @@ var ViewModel = function() {
     pizzaLocations.forEach(function(pizzaItem) {
         self.pizzaList.push(new Pizza(pizzaItem));
     });
+
+     //Foursquare API request. 
+    //Thanks to CPerry24 and his repo at github.com/cperry24/interactive-map
+    //for the help. 
+    function fourSquareData(location){
+        var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
+        var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
+        var fqVersion = '20130815'; //I don't actually know what this is?
+        var fourSqURL;
+        var fqLat;
+        var fqLng;
+
+        //Use the lat/lng from the pizzaLocations array to build the Foursquare request
+        var fqLat = pizzaLocation.location.lat;
+        var fqLng = pizzaLocation.location.lng;
+        fourSqURL = 'https://api.foursquare.com/v2/venues/explore' + '?client_id=' + clientID + '&client_secret=' + clientSecret + '&v=' + fqVersion + '&ll=' + fqLat + ',' + fqLng + '&limit=50';
+
+    }
 
     //Set default map marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
