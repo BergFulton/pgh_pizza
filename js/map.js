@@ -128,40 +128,11 @@ var ViewModel = function() {
     function fourSquareData(location){
         var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
         var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
-        var fqVersion = '20130815'; //I don't actually know what this is?
+        var fqVersion = '20130815'; 
         var fourSqURL;
-        var fqLat;
-        var fqLng;
-
-        //Use the lat/lng from the pizzaLocations array to build the Foursquare request
-        var fqLat = pizzaLocation.location.lat;
-        var fqLng = pizzaLocation.location.lng;
-        fourSqURL = 'https://api.foursquare.com/v2/venues/explore' + '?client_id=' + clientID + '&client_secret=' + clientSecret + '&v=' + fqVersion + '&ll=' + fqLat + ',' + fqLng + '&limit=50';
-
-        //AJAX request
-         $.ajax({
-            url: fourSqUrl,
-            datatype: "jsonp",
-            success: function(response) {
-                resp = response.response.groups[0].items[0].venue;
-                console.log(resp);
-                //Build infoWindow content string with data from API Request
-                infoWindow.setContent('<a href="' + location.fourSqUrl + '">' + resp.name + '</a>' + '<br>' + location.phone + '<br>' + location.address + '<br>' + resp.location.city + ', ' + resp.location.state + ' ' + resp.location.postalCode + '<br>' + location.description + '<br>'  + '<a href="' + location.website + '">' + location.website + '</a>' + '<br>' + '<a href="' + location.twitterLink + '">' + '@' + location.twitter + '</a>');
-                
-                infoWindow.open(map, location.marker); //open the info window
-            }, // Error method to be run if request fails
-            error: function(fourSqUrl, errorMsg) {
-                setTimeout(function() { // Display error after 2 seconds if Request to API fails
-                    if (errorMsg) {
-                        infoWindow.setContent("I'm sorry, an error has occurred. Please try again later.");
-                        infoWindow.open(map, location.marker);
-                    }
-                }, 2000);
-            }
-            
-        });
-
-    }
+        var fqLat = data.location.lat; //not sure if this actually works?
+        var fqLng = data.location.lng; //I want to pass the lat/lng of only locations within pizzaLocations?
+    };
 
     //Set default map marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
