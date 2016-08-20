@@ -11,6 +11,7 @@ var pizzaLocations = [{
     'site': 'http://www.fiorispizzaria.com',
     'cash_only': 'cash only',
     'inside_info': "A little greasy, but a Pittsburgh favorite. Also: pinball!",
+    'fqId': "4b529c71f964a520d68327e3",
     'location': {
         lat: 40.4127159,
         lng: -80.0325241
@@ -22,6 +23,7 @@ var pizzaLocations = [{
     'site': 'http://www.franks-pizzeria.com',
     'cash_only': 'cash only',
     'inside_info': "Because putting the cheese on top is boring.",
+    'fqId': "4b58ac5cf964a520fc6428e3",
     'location': {
         lat: 40.5882699,
         lng: -80.2267282
@@ -33,6 +35,7 @@ var pizzaLocations = [{
     'site': '',
     'cash_only': 'cash only',
     'inside_info': "By the slice, and know how many slices you need before you hit the door. Cash only.",
+    'fqId': "4b9ac8adf964a52048d535e3",
     'location': {
         lat: 40.5918369,
         lng: -80.2325444
@@ -44,6 +47,7 @@ var pizzaLocations = [{
     'site': '',
     'cash_only': 'accepts cards',
     'inside_info': "Who says the cheese has to be melted?",
+    'fqId': "4af38ebcf964a52098ee21e3",
     'location': {
         lat: 40.4127159,
         lng: -80.0325241
@@ -56,6 +60,7 @@ var pizzaLocations = [{
     'site': 'http://www.aiellospizza.com',
     'cash_only': 'accepts cards',
     'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
+    'fqId': "4aa6cafdf964a520ff4a20e3",
     'location': {
         lat: 40.4332582,
         lng: -79.9253431
@@ -67,6 +72,7 @@ var pizzaLocations = [{
     'site': 'http://www.mineospizza.com',
     'cash_only': 'accepts cards',
     'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
+    'fqId': "4ad7c0ebf964a520600e21e3",
     'location': {
         lat: 40.4328888,
         lng: -79.9253663
@@ -78,6 +84,7 @@ var pizzaLocations = [{
     'site': 'http://www.spakbrothers.com',
     'cash_only': 'accepts cards',
     'inside_info': "Need some seitan wings with your pizza? Plays Fugazi's 'Waiting Room' as their hold music.",
+    'fqId': "4ad7af38f964a520a50d21e3",
     'location': {
         lat: 40.4650793,
         lng: -79.9447056
@@ -89,10 +96,23 @@ var pizzaLocations = [{
     'site': 'http://www.ephesuspizza.com',
     'cash_only': 'accepts cards',
     'inside_info': "One of a very few local pizza joints in downtown.",
+    'fqId': "4ad89cbcf964a520d71221e3",
     'location': {
         lat: 40.4398797,
         lng: -80.0045522
     }
+},{
+   'title': 'Juliano\'s',
+    'address': '5476 Steubenville Pike, McKees Rocks, PA 15136',
+    'phone': '412-787-2959',
+    'site': 'http://www.julianosonline.com',
+    'cash_only': 'accepts cards',
+    'inside_info': "A family joint with great pasta AND pizza. You want the chunky sauce.",
+    'fqId': "4b6a08a3f964a5201fc32be33",
+    'location': {
+        lat: 40.4502136,
+        lng: -80.1283347
+    } 
 }];
 
 
