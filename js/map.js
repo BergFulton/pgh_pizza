@@ -1,6 +1,6 @@
 //Global variables
 var map;
-var infowindow;     // create global infowindow 
+var infowindow; // create global infowindow 
 
 
 //Some pizza places- only the best! This is the model.
@@ -67,7 +67,7 @@ var pizzaLocations = [{
     }
 }, {
     'title': 'Mineo\'s',
-     'address': '2128 Murray Ave, Pittsburgh, PA 15217',
+    'address': '2128 Murray Ave, Pittsburgh, PA 15217',
     'phone': '412-521-9864',
     'site': 'http://www.mineospizza.com',
     'cash_only': 'accepts cards',
@@ -101,8 +101,8 @@ var pizzaLocations = [{
         lat: 40.4398797,
         lng: -80.0045522
     }
-},{
-   'title': 'Juliano\'s',
+}, {
+    'title': 'Juliano\'s',
     'address': '5476 Steubenville Pike, McKees Rocks, PA 15136',
     'phone': '412-787-2959',
     'site': 'http://www.julianosonline.com',
@@ -112,7 +112,7 @@ var pizzaLocations = [{
     'location': {
         lat: 40.4502136,
         lng: -80.1283347
-    } 
+    }
 }];
 
 
@@ -126,14 +126,14 @@ var ViewModel = function() {
 
     //Pizza constructor
     var Pizza = function(data) {
-      this.title = data.title;
-      this.address = data.address;
-      this.phone = data.phone;
-      this.site = data.site;
-      this.cash_only = data.cash_only;
-      this.inside_info = data.inside_info;
-      // add the location data so that you can create a marker with pizzaList
-      this.location = data.location;
+        this.title = data.title;
+        this.address = data.address;
+        this.phone = data.phone;
+        this.site = data.site;
+        this.cash_only = data.cash_only;
+        this.inside_info = data.inside_info;
+        // add the location data so that you can create a marker with pizzaList
+        this.location = data.location;
     };
 
     this.pizzaList = ko.observableArray([]);
@@ -142,17 +142,44 @@ var ViewModel = function() {
         self.pizzaList.push(new Pizza(pizzaItem));
     });
 
-     //Foursquare API request. 
-    //Thanks to CPerry24 and his repo at github.com/cperry24/interactive-map
-    //for the help. 
-    function fourSquareData(location){
+
+    //Help w/Foursquare API request from Thomas Allen's excellently
+    //ordered code at https://github.com/1103TomFoolery/Neighborhood
+    function addFq() {
+        //Foursquare credentials for executing API request
         var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
         var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
-        var fqVersion = '20130815'; 
-        var fourSqURL;
-        var fqLat = data.location.lat; //not sure if this actually works?
-        var fqLng = data.location.lng; //I want to pass the lat/lng of only locations within pizzaLocations?
-    };
+        var reqUrl = "https://api.foursquare.com/v2/venues/search?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20130815&ll=40.7,-74";
+
+        // https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815&ll=40.7,-74&query=sushi
+
+        pizzaLocations.forEach(function(pies) {
+            // returning two decimal places w/o rounding for Foursquare API request
+            // http://stackoverflow.com/questions/4187146/display-two-decimal-places-no-rounding
+            var pieLat = (Math.floor(pies.location.lat * 100) / 100).toFixed(2),
+                pieLng = (Math.floor(pies.location.lng * 100) / 100).toFixed(2);
+
+            // console.log(pies.location);
+            // Math.floor(15.7784514000 * 100) / 100
+
+            $.ajax({
+                    url: reqUrl + "&ll=" + pieLat + "," + pieLng + "&query=pizza"
+                })
+                .done(function(data) {
+                    console.log(data);
+                });
+
+            //Foursquare API query
+            // $.ajax ({
+            //     type: "GET", 
+            //     dataType: "json",
+            //     url: 'https://api.foursquare.com/v2/venues/explore',
+            //     data: 'limit=1&ll=' + pies.lat + ',' + pies.lng + '&query=' + pies.title + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=201408066&m=foursquare',
+            // })
+        })
+    }
+
+    addFq();
 
     //Set default map marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
@@ -178,7 +205,7 @@ var ViewModel = function() {
     for (var i = 0; i < self.pizzaList().length; i++) {
         //get the lat/lng for each item
         var position = self.pizzaList()[i].location;
-        var title = self.pizzaList()[i].title;       
+        var title = self.pizzaList()[i].title;
         //place a marker on each location
         var marker = new google.maps.Marker({
             position: position,
@@ -203,7 +230,7 @@ var ViewModel = function() {
         // add listener to set infowindow content and set open
         marker.addListener('click', function() {
             infowindow.setContent(this.title)
-            infowindow.open(map, this )
+            infowindow.open(map, this)
         });
 
         // set marker as a property of pizzaList location 
@@ -214,35 +241,9 @@ var ViewModel = function() {
 
     // function to trigger marker click when list view item is clicked *********
     self.openWindow = function(location) {
-      google.maps.event.trigger( location.marker,'click');
+        google.maps.event.trigger(location.marker, 'click');
     }
-} 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
