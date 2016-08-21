@@ -132,6 +132,7 @@ var ViewModel = function() {
         this.site = data.site;
         this.cash_only = data.cash_only;
         this.inside_info = data.inside_info;
+        this.fqId = data.fqId;
         // add the location data so that you can create a marker with pizzaList
         this.location = data.location;
     };
@@ -147,9 +148,10 @@ var ViewModel = function() {
     //ordered code at https://github.com/1103TomFoolery/Neighborhood
     function addFq() {
         //Foursquare credentials for executing API request
+        var fqIdUrl = data. fqId;
         var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
         var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
-        var reqUrl = "https://api.foursquare.com/v2/venues/search?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20130815&ll=40.7,-74";
+        var reqUrl = "https://api.foursquare.com/v2/venues/" + fqId;
 
         // https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815&ll=40.7,-74&query=sushi
 
@@ -157,25 +159,21 @@ var ViewModel = function() {
             // returning two decimal places w/o rounding for Foursquare API request
             // http://stackoverflow.com/questions/4187146/display-two-decimal-places-no-rounding
             var pieLat = (Math.floor(pies.location.lat * 100) / 100).toFixed(2),
-                pieLng = (Math.floor(pies.location.lng * 100) / 100).toFixed(2);
+                pieLng = (Math.floor(pies.location.lng * 100) / 100).toFixed(2),
+                pieFqId = pies.fqId;
 
             // console.log(pies.location);
             // Math.floor(15.7784514000 * 100) / 100
 
             $.ajax({
-                    url: reqUrl + "&ll=" + pieLat + "," + pieLng + "&query=pizza"
+                    type: "GET",
+                    dataType: "json",
+                    url: reqUrl + "&client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20130815";
+
                 })
                 .done(function(data) {
                     console.log(data);
                 });
-
-            //Foursquare API query
-            // $.ajax ({
-            //     type: "GET", 
-            //     dataType: "json",
-            //     url: 'https://api.foursquare.com/v2/venues/explore',
-            //     data: 'limit=1&ll=' + pies.lat + ',' + pies.lng + '&query=' + pies.title + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=201408066&m=foursquare',
-            // })
         })
     }
 
