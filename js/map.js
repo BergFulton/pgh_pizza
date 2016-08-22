@@ -148,32 +148,34 @@ var ViewModel = function() {
     //ordered code at https://github.com/1103TomFoolery/Neighborhood
     function addFq() {
         //Foursquare credentials for executing API request
-        var fqIdUrl = data. fqId;
+        // var fqIdUrl = fuckoff.fqId;
         var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
         var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
-        var reqUrl = "https://api.foursquare.com/v2/venues/" + fqId;
+        var reqUrl = "https://api.foursquare.com/v2/venues/";
 
         // https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815&ll=40.7,-74&query=sushi
 
         pizzaLocations.forEach(function(pies) {
             // returning two decimal places w/o rounding for Foursquare API request
             // http://stackoverflow.com/questions/4187146/display-two-decimal-places-no-rounding
-            var pieLat = (Math.floor(pies.location.lat * 100) / 100).toFixed(2),
-                pieLng = (Math.floor(pies.location.lng * 100) / 100).toFixed(2),
-                pieFqId = pies.fqId;
-
+            // var pieLat = (Math.floor(pies.location.lat * 100) / 100).toFixed(2),
+            //     pieLng = (Math.floor(pies.location.lng * 100) / 100).toFixed(2);
+            
             // console.log(pies.location);
             // Math.floor(15.7784514000 * 100) / 100
 
-            $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: reqUrl + "&client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20130815";
+            var fsquareId = pies.fqId;
+            var myUrl = reqUrl + fsquareId + "?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20160624";
 
-                })
-                .done(function(data) {
-                    console.log(data);
-                });
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: myUrl
+
+            })
+            .done(function(data) {
+                console.log(data);
+            });
         })
     }
 
