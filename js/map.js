@@ -72,7 +72,7 @@ var pizzaLocations = [{
     'site': 'http://www.mineospizza.com',
     'cash_only': 'accepts cards',
     'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
-    'fqId': "4ad7c0ebf964a520600e21e3",
+    'fqId': "4ad7c0ebf964a520600e21e3", 
     'location': {
         lat: 40.4328888,
         lng: -79.9253663
@@ -108,7 +108,7 @@ var pizzaLocations = [{
     'site': 'http://www.julianosonline.com',
     'cash_only': 'accepts cards',
     'inside_info': "A family joint with great pasta AND pizza. You want the chunky sauce.",
-    'fqId': "4b6a08a3f964a5201fc32be33",
+    'fqId': "4b6a08a3f964a5201fc32be3",
     'location': {
         lat: 40.4502136,
         lng: -80.1283347
