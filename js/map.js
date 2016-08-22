@@ -148,7 +148,6 @@ var ViewModel = function() {
     //ordered code at https://github.com/1103TomFoolery/Neighborhood
     function addFq() {
         //Foursquare credentials for executing API request
-        // var fqIdUrl = fuckoff.fqId;
         var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
         var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
         var reqUrl = "https://api.foursquare.com/v2/venues/";
