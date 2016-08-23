@@ -115,15 +115,17 @@ var pizzaLocations = [{
     }
 }];
 
-/* MOVE FOURSQUARE API REQUEST OUT OF VIEW MODEL -----------------------------------------------*/
 
-// Run Foursquare venue seach for location *********************************
+// Run Foursquare venue seach for each location from the pizzaLocations object
 var addFq = function(location) {
     //Foursquare credentials for executing API request
     var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
     var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
     var reqUrl = "https://api.foursquare.com/v2/venues/";
 
+    //Uses the Foursquare ID from the pizzaLocations object to access data
+    //- this is how we get data from just our pizza joints. It's a restrictor, but for
+    //the purposes of this project, that's ok. Other params can be used to make this call.
     var fsquareId = location.fqId;
     var myUrl = reqUrl + fsquareId + "?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20160624";
 
@@ -134,7 +136,7 @@ var addFq = function(location) {
 
     })
     .done(function(data) {
-        // set shortand for venue (so data is easier to access)*********
+        // set shortand for venue 
         var venue = data.response.venue;
         location.likes = venue.likes.count ? venue.likes.count : "n/a" ;
         var fsContent = '<h3>' + location.title + '</h3>' + 
@@ -216,104 +218,16 @@ var ViewModel = function() {
     // add variable to hold text input value 
     self.query = ko.observable();
 
-/* MOVE PIZZA CONSTRUCTOR OUT OF VIEW MODEL -----------------------------------------------------
- * This is both better for modular construction and makes it easier to manage the scope.
- * You can keep the constructor inside the View Model but you will need to create
- * a `var that = this` to access the Pizza scope inside the marker click handler (see
- * below. You can't use `var self = this` becauee you need `self` to refer to the View
- * Model
- 
- 
-    //Pizza constructor
-    var Pizza = function(data) {
-        this.title = data.title;
-        this.address = data.address;
-        this.phone = data.phone;
-        this.site = data.site;
-        this.cash_only = data.cash_only;
-        this.inside_info = data.inside_info;
-        this.fqId = data.fqId;
-        // add the location data so that you can create a marker with pizzaList
-        this.location = data.location;
-    };
------------------------------------------------------------------------------------------------*/
     this.pizzaList = ko.observableArray([]);
 
     pizzaLocations.forEach(function(pizzaItem) {
         self.pizzaList.push(new Pizza(pizzaItem));
     });
 
-/* MOVE FOURSQUARE API REQUEST OUT OF VIEW MODEL -----------------------------------------------
- * You don't necessarily need to move the API request out of the View Model, but it is 
- * better modular coding and it easier to access in the function from the marker click
- * function.  If you want to keep the Foursquare request in the View Model you'll need
- * to instantiate your View Model with a name before you apply the bindings so you can
- * access it from the marker click function.  You'd do that like this:
- 
-              var vm = new ViewModel();
-              ko.applyBindings(vm));
- 
- 
- 
-    //Help w/Foursquare API request from Thomas Allen's excellently
-    //ordered code at https://github.com/1103TomFoolery/Neighborhood
-    function addFq() {
-        //Foursquare credentials for executing API request
-        var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
-        var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
-        var reqUrl = "https://api.foursquare.com/v2/venues/";
-        // https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815&ll=40.7,-74&query=sushi
-        pizzaLocations.forEach(function(pies) {
-            // returning two decimal places w/o rounding for Foursquare API request
-            // http://stackoverflow.com/questions/4187146/display-two-decimal-places-no-rounding
-            // var pieLat = (Math.floor(pies.location.lat * 100) / 100).toFixed(2),
-            //     pieLng = (Math.floor(pies.location.lng * 100) / 100).toFixed(2);
-            
-            // console.log(pies.location);
-            // Math.floor(15.7784514000 * 100) / 100
-            var fsquareId = pies.fqId;
-            var myUrl = reqUrl + fsquareId + "?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20160624";
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: myUrl
-            })
-            .done(function(data) {
-                console.log(data);
-            });
-        })
-    }
-  
-    addFq();
-   -----------------------------------------------------------------------------------------------*/
-   
-  /* MOVE MARKER ICON FUNCTIONS INTO PIZZA CONSTRUCTOR  ------------------------------------------
-   * they don't necessarily need to be in the constructor but that allows for easy access 
-   * when you are creating the mouseover and mouseout handlers.
-  
-  
-    //Set default map marker icon color
-    var defaultIcon = makeMarkerIcon('0091ff');
-    //Set highlighted marker icon color
-    var highlightedIcon = makeMarkerIcon('FFFF24');
-    //Set icon color for a user-submitted entry
-    var userSubIcon = makeMarkerIcon('FFA500');
-    //Create marker icons for use in the default icon and highlighted icon
-    function makeMarkerIcon(markerColor) {
-        var markerImage = new google.maps.MarkerImage('http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor + '|40|_|%E2%80%A2',
-            new google.maps.Size(21, 34),
-            new google.maps.Point(0, 0),
-            new google.maps.Point(10, 34),
-            new google.maps.Size(21, 34));
-        return markerImage;
-    }
-  ---------------------------------------------------------------------------------------------*/
-  
-  
-  
+
   /* MOVE MARKER CREATION INSIDE PIZZA CONSTRUCTOR ---------------------------------------------
    * This makes it easier to manage the scope because you are creating each marker individually
-   * when you create a new Pizza().   
+   * when you create a new Pizza().*/
    
     //Loop through the self.pizzaList() array
     for (var i = 0; i < self.pizzaList().length; i++) {
@@ -345,18 +259,31 @@ var ViewModel = function() {
         // set marker as a property of pizzaList location 
         self.pizzaList()[i].marker = marker;
     }
-   -----------------------------------------------------------------------------------------------*/
 
 
-   /* THIS CODE STAYS IN THE VIEW MODEL  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
-    // function to trigger marker click when list view item is clicked *********
+    // function to trigger marker click when list view item is clicked 
     self.openWindow = function(location) {
         google.maps.event.trigger(location.marker, 'click');
     }
 }
 
 // end ViewModel *************************************************************
+
+//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 40.440625,
+            lng: -79.995886
+        },
+        zoom: 10,
+        mapTypeControl: true
+    });
+
+    // create global infowindow 
+    infowindow = new google.maps.InfoWindow();
+    ko.applyBindings(new ViewModel());
+}
 
 // comment out code not needed
 /*        //Event listeners for button interactions
@@ -573,18 +500,4 @@ var ViewModel = function() {
 }
 */
 
-//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: 40.440625,
-            lng: -79.995886
-        },
-        zoom: 10,
-        mapTypeControl: true
-    });
 
-    // create global infowindow ************************************************
-    infowindow = new google.maps.InfoWindow();
-    ko.applyBindings(new ViewModel());
-}
