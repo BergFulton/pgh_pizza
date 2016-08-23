@@ -125,7 +125,7 @@ var addFq = function(location) {
 
     //Uses the Foursquare ID from the pizzaLocations object to access data
     //- this is how we get data from just our pizza joints. It's a restrictor, but for
-    //the purposes of this project, that's ok. Other params can be used to make this call.
+    //the purposes of this project, that's ok. Other params can be used to make this call
     var fsquareId = location.fqId;
     var myUrl = reqUrl + fsquareId + "?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20160624";
 
@@ -133,14 +133,15 @@ var addFq = function(location) {
         type: "GET",
         dataType: "json",
         url: myUrl
-
     })
     .done(function(data) {
         // set shortand for venue 
         var venue = data.response.venue;
         location.likes = venue.likes.count ? venue.likes.count : "n/a" ;
+        location.hours = venue.hours ? venue.hours : "n/a";
         var fsContent = '<h3>' + location.title + '</h3>' + 
-              '<p> Likes: ' + location.likes + '</p>';          
+              '<p> Likes: ' + location.likes + '</p>' +
+              ;          
         infowindow.setContent(fsContent)
         infowindow.open(map, location.marker)
 
