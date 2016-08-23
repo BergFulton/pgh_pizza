@@ -137,8 +137,13 @@ var addFq = function(location) {
         // set shortand for venue (so data is easier to access)*********
         var venue = data.response.venue;
         location.likes = venue.likes.count ? venue.likes.count : "n/a" ;
+        location.hours = venue.hours;
+        location.url = venue.url;
+            console.log(location.hours);
         var fsContent = '<h3>' + location.title + '</h3>' + 
-              '<p> Likes: ' + location.likes + '</p>';          
+              '<p> Likes: ' + location.likes + '</p>' +
+              '<p> hours: '+ location.hours + '</p>' +
+              '<p> url: '+  location.url + '</p>';          
         infowindow.setContent(fsContent)
         infowindow.open(map, location.marker)
 
@@ -181,7 +186,6 @@ var Pizza = function(data) {
 
     // add listener to set infowindow content and set open
     self.marker.addListener('click', function() {
-        console.log(self)
         addFq(self);
     });
 
@@ -584,7 +588,7 @@ function initMap() {
         mapTypeControl: true
     });
 
-    // create global infowindow ************************************************
+    // create global infowindow
     infowindow = new google.maps.InfoWindow();
     ko.applyBindings(new ViewModel());
 }
