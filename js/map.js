@@ -137,13 +137,15 @@ var addFq = function(location) {
         // set shortand for venue (so data is easier to access)*********
         var venue = data.response.venue;
         location.likes = venue.likes.count ? venue.likes.count : "n/a" ;
-        location.hours = venue.hours;
+        location.open = venue.hours.isOpen;
+        location.hours = venue.hours.days;
         location.url = venue.url;
             console.log(location.hours);
         var fsContent = '<h3>' + location.title + '</h3>' + 
-              '<p> Likes: ' + location.likes + '</p>' +
-              '<p> hours: '+ location.hours + '</p>' +
-              '<p> url: '+  location.url + '</p>';          
+                '<p> Open now?: '+ location.open + '</p>' +
+                '<p> Hours: ' + location.hours + '</p>' +
+                '<p> url: '+  location.url + '</p>' +
+                '<p> Likes: ' + location.likes + '</p>';          
         infowindow.setContent(fsContent)
         infowindow.open(map, location.marker)
 
