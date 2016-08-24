@@ -115,17 +115,15 @@ var pizzaLocations = [{
     }
 }];
 
-// Run Foursquare venue seach for each location from the pizzaLocations object
+/* MOVE FOURSQUARE API REQUEST OUT OF VIEW MODEL -----------------------------------------------*/
 
+// Run Foursquare venue seach for location *********************************
 var addFq = function(location) {
     //Foursquare credentials for executing API request
     var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
     var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
     var reqUrl = "https://api.foursquare.com/v2/venues/";
 
-    //Uses the Foursquare ID from the pizzaLocations object to access data
-    //- this is how we get data from just our pizza joints. It's a restrictor, but for
-    //the purposes of this project, that's ok. Other params can be used to make this call
     var fsquareId = location.fqId;
     var myUrl = reqUrl + fsquareId + "?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20160624";
 
@@ -133,6 +131,7 @@ var addFq = function(location) {
         type: "GET",
         dataType: "json",
         url: myUrl
+
     })
     .done(function(data) {
         // set shortand for venue 
@@ -175,6 +174,25 @@ var Pizza = function(data) {
         animation: google.maps.Animation.DROP
     });
 
+    // To add the marker to the map, call setMap();
+    self.marker.setMap(map);
+
+    //Two event listeners - one for mouseover, one for mouseout- changes colors of icon.
+    self.marker.addListener('mouseover', function() {
+        this.setIcon(highlightedIcon);
+    });
+
+    self.marker.addListener('mouseout', function() {
+        this.setIcon(defaultIcon);
+    });
+
+    // add listener to set infowindow content and set open
+    self.marker.addListener('click', function() {
+        console.log(self)
+        addFq(self);
+    });
+
+
     //Set default map marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
 
@@ -196,22 +214,6 @@ var Pizza = function(data) {
             new google.maps.Size(21, 34));
         return markerImage;
     }
-    // To add the marker to the map, call setMap();
-    self.marker.setMap(map);
-
-    //Two event listeners - one for mouseover, one for mouseout- changes colors of icon.
-    self.marker.addListener('mouseover', function() {
-        this.setIcon(highlightedIcon);
-    });
-
-    self.marker.addListener('mouseout', function() {
-        this.setIcon(defaultIcon);
-    });
-
-    // add listener to set infowindow content and set open
-    self.marker.addListener('click', function() {
-        addFq(self);
-    });
 
 }
 
@@ -221,16 +223,113 @@ var ViewModel = function() {
     // add variable to hold text input value 
     self.query = ko.observable();
 
+/* MOVE PIZZA CONSTRUCTOR OUT OF VIEW MODEL -----------------------------------------------------
+ * This is both better for modular construction and makes it easier to manage the scope.
+ * You can keep the constructor inside the View Model but you will need to create
+ * a `var that = this` to access the Pizza scope inside the marker click handler (see
+ * below. You can't use `var self = this` becauee you need `self` to refer to the View
+ * Model
+ 
+ 
+    //Pizza constructor
+    var Pizza = function(data) {
+        this.title = data.title;
+        this.address = data.address;
+        this.phone = data.phone;
+        this.site = data.site;
+        this.cash_only = data.cash_only;
+        this.inside_info = data.inside_info;
+        this.fqId = data.fqId;
+        // add the location data so that you can create a marker with pizzaList
+        this.location = data.location;
+    };
+-----------------------------------------------------------------------------------------------*/
     this.pizzaList = ko.observableArray([]);
 
     pizzaLocations.forEach(function(pizzaItem) {
         self.pizzaList.push(new Pizza(pizzaItem));
     });
 
+/* MOVE FOURSQUARE API REQUEST OUT OF VIEW MODEL -----------------------------------------------
+ * You don't necessarily need to move the API request out of the View Model, but it is 
+ * better modular coding and it easier to access in the function from the marker click
+ * function.  If you want to keep the Foursquare request in the View Model you'll need
+ * to instantiate your View Model with a name before you apply the bindings so you can
+ * access it from the marker click function.  You'd do that like this:
+ 
+              var vm = new ViewModel();
+              ko.applyBindings(vm));
+ 
+ 
+ 
+    //Help w/Foursquare API request from Thomas Allen's excellently
+    //ordered code at https://github.com/1103TomFoolery/Neighborhood
+    function addFq() {
+        //Foursquare credentials for executing API request
+        var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
+        var clientSecret = 'GIM4SA1DH43FQ5JN0VEG013HJ3D3JMAOORG2V1GKZXHFHYQM';
+        var reqUrl = "https://api.foursquare.com/v2/venues/";
 
+        // https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815&ll=40.7,-74&query=sushi
+
+        pizzaLocations.forEach(function(pies) {
+            // returning two decimal places w/o rounding for Foursquare API request
+            // http://stackoverflow.com/questions/4187146/display-two-decimal-places-no-rounding
+            // var pieLat = (Math.floor(pies.location.lat * 100) / 100).toFixed(2),
+            //     pieLng = (Math.floor(pies.location.lng * 100) / 100).toFixed(2);
+            
+            // console.log(pies.location);
+            // Math.floor(15.7784514000 * 100) / 100
+
+            var fsquareId = pies.fqId;
+            var myUrl = reqUrl + fsquareId + "?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20160624";
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: myUrl
+
+            })
+            .done(function(data) {
+                console.log(data);
+            });
+        })
+    }
+  
+    addFq();
+   -----------------------------------------------------------------------------------------------*/
+   
+  /* MOVE MARKER ICON FUNCTIONS INTO PIZZA CONSTRUCTOR  ------------------------------------------
+   * they don't necessarily need to be in the constructor but that allows for easy access 
+   * when you are creating the mouseover and mouseout handlers.
+  
+  
+    //Set default map marker icon color
+    var defaultIcon = makeMarkerIcon('0091ff');
+
+    //Set highlighted marker icon color
+    var highlightedIcon = makeMarkerIcon('FFFF24');
+
+    //Set icon color for a user-submitted entry
+    var userSubIcon = makeMarkerIcon('FFA500');
+
+
+    //Create marker icons for use in the default icon and highlighted icon
+    function makeMarkerIcon(markerColor) {
+        var markerImage = new google.maps.MarkerImage('http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor + '|40|_|%E2%80%A2',
+            new google.maps.Size(21, 34),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(10, 34),
+            new google.maps.Size(21, 34));
+        return markerImage;
+    }
+  ---------------------------------------------------------------------------------------------*/
+  
+  
+  
   /* MOVE MARKER CREATION INSIDE PIZZA CONSTRUCTOR ---------------------------------------------
    * This makes it easier to manage the scope because you are creating each marker individually
-   * when you create a new Pizza().*/
+   * when you create a new Pizza().   
    
     //Loop through the self.pizzaList() array
     for (var i = 0; i < self.pizzaList().length; i++) {
@@ -245,26 +344,35 @@ var ViewModel = function() {
             animation: google.maps.Animation.DROP,
             id: i
         });
+
         // To add the marker to the map, call setMap();
         marker.setMap(map);
+
         //Two event listeners - one for mouseover, one for mouseout- changes colors of icon.
         marker.addListener('mouseover', function() {
             this.setIcon(highlightedIcon);
         });
+
         marker.addListener('mouseout', function() {
             this.setIcon(defaultIcon);
         });
+
         // add listener to set infowindow content and set open
         marker.addListener('click', function() {
             infowindow.setContent(this.title)
             infowindow.open(map, this)
         });
+
         // set marker as a property of pizzaList location 
         self.pizzaList()[i].marker = marker;
+
     }
+   -----------------------------------------------------------------------------------------------*/
 
 
-    // function to trigger marker click when list view item is clicked 
+   /* THIS CODE STAYS IN THE VIEW MODEL  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+    // function to trigger marker click when list view item is clicked *********
     self.openWindow = function(location) {
         google.maps.event.trigger(location.marker, 'click');
     }
@@ -272,42 +380,30 @@ var ViewModel = function() {
 
 // end ViewModel *************************************************************
 
-//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: 40.440625,
-            lng: -79.995886
-        },
-        zoom: 10,
-        mapTypeControl: true
-    });
-
-    // create global infowindow 
-    infowindow = new google.maps.InfoWindow();
-    ko.applyBindings(new ViewModel());
-}
-
 // comment out code not needed
 /*        //Event listeners for button interactions
         document.getElementById('hide-listings').addEventListener('click',
             function() {
                 hideMarkers(markers);
             });
+
         //Directions search event listener
         document.getElementById('search-within-time').addEventListener('click', function() {
                 searchWithinTime();
             });
+
         //Listen for the event fired when the user selects a prediction
         //and then clicks "go". Then get more details about the place
         document.getElementById('get-pizza').
         addEventListener('click', textSearchPlaces);
+
         // //This is the function to hide all listings
         // function hideMarkers(markers) {
         //     for (var i = 0; i < markers.length; i++) {
         //         markers[i].setMap(null);
         //     }
         // }
+
         //This is the autocomplete for use in the search box to add new places
         var timeAutocomplete = new google.maps.places.Autocomplete(
             document.getElementById('pizza-search'));
@@ -315,8 +411,11 @@ function initMap() {
         //be added to above?
         var timeAutocomplete = new google.maps.places.Autocomplete(
             document.getElementById('search-within-time-text'));
+
         var searchBox = new google.maps.places.SearchBox(
             document.getElementById('pizza-search'));
+
+
         //Search for Places data based on the input of the user.
         function textSearchPlaces() {
             var bounds = map.getBounds();
@@ -331,6 +430,8 @@ function initMap() {
                 }
             });
         }
+
+
         //This function fires when the user selects a searchbox picklist
         //item. It will do a nearby search using the selected query.
         function searchBoxPlaces(searchBox) {
@@ -342,6 +443,7 @@ function initMap() {
                 window.alert('We did not find any places matching that search.');
             }
         }
+
         //This function creates markers for each place found in
         //places search.
         function createMarkersForPlaces(places) {
@@ -355,6 +457,7 @@ function initMap() {
                     anchor: new google.maps.Point(15, 15),
                     scaledSize: new google.maps.Size(25, 25)
                 };
+
                 //Create a marker for each place.
                 var marker = new google.maps.Marker({
                     map: map,
@@ -363,9 +466,11 @@ function initMap() {
                     position: place.geometry.location,
                     id: place.id
                 });
+
                 //Create a single infowindow to be used with the place detail.
                 //Allow only 1 to be open at a time.
                 var placeInfoWindow = new google.maps.InfoWindow();
+
                 //If a marker is clicked, do a place details search on
                 //it in the next function.
                 marker.addListener('click', function() {
@@ -385,13 +490,16 @@ function initMap() {
             }
             map.fitBounds(bounds);
         }
+
 }
+
      //This is the function to hide all listings
             function hideMarkers(markers) {
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
         }
+
 //This function allows the user to input a desired travel time and travel mode, and a location. It will only show places that are reachable within the desired travel duration period.
         function searchWithinTime() {
             //Initialize the distance matrix service
@@ -425,6 +533,7 @@ function initMap() {
                 });
             }
         }
+
 //This function checks the results--if the distance is less
         //than the value in the picker, then show it on the map.
         function displayMarkersWithinTime(response) {
@@ -470,6 +579,9 @@ function initMap() {
                 }
             }
         }
+
+
+
         //This function is in reponse to the user selecting "show
         //route" on one of the markers iwthin the caluclated distance.
         //This will display the route on the map
@@ -501,5 +613,21 @@ function initMap() {
                 }
             });
 }
+
 */
 
+//Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 40.440625,
+            lng: -79.995886
+        },
+        zoom: 10,
+        mapTypeControl: true
+    });
+
+    // create global infowindow ************************************************
+    infowindow = new google.maps.InfoWindow();
+    ko.applyBindings(new ViewModel());
+}
