@@ -158,6 +158,22 @@ var addFq = function(location) {
 //Pizza constructor
 var Pizza = function(data) {
     var self = this;
+    this.title = data.title;
+    this.address = data.address;
+    this.phone = data.phone;
+    this.site = data.site;
+    this.cash_only = data.cash_only;
+    this.inside_info = data.inside_info;
+    this.fqId = data.fqId;
+    // add the location data so self you can create a marker with pizzaList
+    this.location = data.location;
+
+    this.marker = new google.maps.Marker({
+        position: self.location,
+        title: self.title,
+        icon: defaultIcon,
+        animation: google.maps.Animation.DROP
+    });
 
     //Set default map marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
@@ -180,23 +196,6 @@ var Pizza = function(data) {
             new google.maps.Size(21, 34));
         return markerImage;
     }
-    this.title = data.title;
-    this.address = data.address;
-    this.phone = data.phone;
-    this.site = data.site;
-    this.cash_only = data.cash_only;
-    this.inside_info = data.inside_info;
-    this.fqId = data.fqId;
-    // add the location data so self you can create a marker with pizzaList
-    this.location = data.location;
-
-    this.marker = new google.maps.Marker({
-        position: self.location,
-        title: self.title,
-        icon: defaultIcon,
-        animation: google.maps.Animation.DROP
-    });
-
     // To add the marker to the map, call setMap();
     self.marker.setMap(map);
 
@@ -503,10 +502,4 @@ function initMap() {
             });
 }
 */
-
-
-
-    // create global infowindow
-    infowindow = new google.maps.InfoWindow();
-    ko.applyBindings(new ViewModel());
 
