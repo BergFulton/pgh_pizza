@@ -141,12 +141,12 @@ var addFq = function(location) {
         var timeframes = venue.hours.timeframes;
 
         //Format the data and return it
-        location.times = prettyHours(timeframes);
+        // location.times = prettyHours(timeframes);
 
         location.likes = venue.likes.count ? venue.likes.count : "n/a" ;
         location.open = venue.hours.isOpen ? 'open' : 'closed';
         // location.days = days;
-        location.hours = hours;
+        // location.hours = hours;
         location.url = venue.url;
             // console.log(location.hours);
         var fsContent = '<h3>' + location.title + '</h3>' + 
@@ -160,6 +160,27 @@ var addFq = function(location) {
         console.log(venue);
     });
 }
+
+// function prettyHours(timeframes){
+//     var formatedTimeframes = "";
+
+//     timeframes.forEach(function(frame){
+//         formattedTimeframes += '<p> Days: ' + frame.days + '</p>';
+//     });
+// return formattedTimeframes;
+// }
+
+// (function() {
+//             for (var i = 0; i < venue.hours.timeframes.length; i++) {
+//                  var timeframes = venue.hours.timeframes[i];
+//                  days.push(venue.hours.timeframes[i].days);
+ 
+//                  for (var j = 0; j < timeframes.open.length; j++) {
+//                      hours.push(timeframes.open[j].renderedTime);
+//                  }
+//              }
+//          })();
+
 
 /* MOVE PIZZA CONSTRUCTOR OUT OF VIEW MODEL ----------------------------------------------------*/
 
