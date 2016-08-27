@@ -136,30 +136,22 @@ var addFq = function(location) {
     .done(function(data) {
         // set shortand for venue 
         var venue = data.response.venue;
-        // var hours = venue.hours.timeframes.length;
-        var days = [];
-        var hours = [];
         
-        (function() {
-            for (var i = 0; i < venue.hours.timeframes.length; i++) {
-                var timeframes = venue.hours.timeframes[i];
-                days.push(venue.hours.timeframes[i].days);
+        //Get the timeframes array from the venue object
+        var timeframes = venue.hours.timeframes;
 
-                for (var j = 0; j < timeframes.open.length; j++) {
-                    hours.push(timeframes.open[j].renderedTime);
-                }
-            }
-        })();
+        //Format the data and return it
+        location.times = prettyHours(timeframes);
 
         location.likes = venue.likes.count ? venue.likes.count : "n/a" ;
         location.open = venue.hours.isOpen ? 'open' : 'closed';
-        location.days = days;
+        // location.days = days;
         location.hours = hours;
         location.url = venue.url;
             // console.log(location.hours);
         var fsContent = '<h3>' + location.title + '</h3>' + 
                 '<p> Open now?: '+ location.open + '</p>' +
-                '<p> Days: ' + location.days + '</p>' +
+                // '<p> Days: ' + location.days + '</p>' +
                 '<p> Hours: ' + location.hours + '</p>' +
                 '<p> url: '+  location.url + '</p>' +
                 '<p> Likes: ' + location.likes + '</p>';          
