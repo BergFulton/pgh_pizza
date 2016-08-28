@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Pittsburgh Pizza Map!</title>
@@ -12,60 +13,63 @@
     <link href="https://fonts.googleapis.com/css?family=Muli|Ovo" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
-  </head>
-  <body>
-    <div class = "container">
-    <div class ="row container">
-      <div class="col-xs-12 col-md-4 banner">
-      <h1>Welcome to the Pittsburgh Pizza Map!</h1>
-      <h2>Featuring only the best independent Pittsburgh pizzas</h2>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class = "searches">
-       <span class="text">Find Pizza Within</span>
-            <select id="max-duration">
-                <option value="10">10 min</option>
-                <option value="15">15 min</option>
-                <option value="30">30 min</option>
-                <option value="60">1 hour</option>
-            </select>
-            <select id="mode">
-                <option value="DRIVING">drive</option>
-                <option value="WALKING">walk</option>
-                <option value="BICYCLING">bike</option>
-                <option value="TRANSIT">transit ride</option>
-            </select>
-            <br>
-            <span class="text">of</span>
-            <input id="search-within-time-text" type="text" placeholder="ex: Kennywood Park or 4400 Forbes Ave.">
-            <input id="search-within-time" type="button" value="Go">
-        </div>
+</head>
 
-        <!-- input box added for text filter.  Use texInput binding because it automatically updates -->
-       <!--  <input id="search-pizza" data-bind="textInput: query" type="text" placeholder="Filter"> -->
-      </div>
-    <div class="row">
-    <div class="col-xs-12 col-md-12" id = "list">
-      <ul data-bind= "foreach: pizzaList">
-        <li> <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
-        </li>
-      </ul>
-       <input id="hide-listings" type="button" value="Get aht">
+<body>
+    <div class="container">
+        <div class="row container">
+            <div class="col-xs-12 col-md-4 banner">
+                <h1>Welcome to the Pittsburgh Pizza Map!</h1>
+                <h2>Featuring only the best independent Pittsburgh pizzas</h2>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="searches">
+                <span class="text">Find Pizza Within</span>
+                <select id="max-duration">
+                    <option value="10">10 min</option>
+                    <option value="15">15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="60">1 hour</option>
+                </select>
+                <select id="mode">
+                    <option value="DRIVING">drive</option>
+                    <option value="WALKING">walk</option>
+                    <option value="BICYCLING">bike</option>
+                    <option value="TRANSIT">transit ride</option>
+                </select>
+                <br>
+                <span class="text">of</span>
+                <input id="search-within-time-text" type="text" placeholder="ex: Kennywood Park or 4400 Forbes Ave.">
+                <input id="search-within-time" type="button" value="Go">
+            </div>
+
+            <!-- input box added for text filter.  Use texInput binding because it automatically updates -->
+            <!--  <input id="search-pizza" data-bind="textInput: query" type="text" placeholder="Filter"> -->
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12" id="list">
+                <ul data-bind="foreach: pizzaList">
+                    <li> <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
+                    </li>
+                </ul>
+                <input id="hide-listings" type="button" value="Get aht">
+            </div>
+        </div>
     </div>
-  </div>
-  </div>
     <div class="row">
-    <div class="col-xs-12 col-md-10" id="map-container"> 
-    <div id="map"></div>
+        <div class="col-xs-12" id="map-container">
+            <div id="map">
+            </div>
+        </div>
     </div>
-  </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/lib/knockout-3.2.0.js"></script>
     <script src="js/map.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=AIzaSyDbhQUVvTyLIEJ-qGSCXpnA3fV1_HDJ-yo&v=3&callback=initMap">
     </script>
-  </div>
-  </body>
+    </div>
+</body>
+
 </html>
