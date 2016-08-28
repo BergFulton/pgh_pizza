@@ -17,12 +17,19 @@ h1, h2 {
 	right: 0px;
 }
 
+#map-container {
+	height: 800px;
+	max-width: 100%;
+	display: inline-block;
+}
+
 .searches {
 	background: #fff;
  	line-height: 35px;
  	padding: 10px 10px 30px 10px;
  	text-align: center;
  	width: 340px;
+ 	display: inline;
 }
 
 .banner{
@@ -32,7 +39,6 @@ h1, h2 {
  	line-height: 35px;
  	padding: 10px 10px 30px 10px;
  	text-align: center;
- 	width: 340px;
 }
 
 
@@ -42,6 +48,6 @@ li, .text{
 	font-size: 1em;
 }
 
-li:hover {
-	background-color: red;
+.highlightItem:hover {
+	background-color: #fafa0c;
 }
