@@ -6,6 +6,7 @@ html, body {
 
 h1, h2 {
 	text-align: center;
+	font-family: 'Ovo', serif;
 }
 
 #map {
@@ -34,6 +35,13 @@ h1, h2 {
  	width: 340px;
 }
 
-li {
+
+li, .text{
 	list-style: none;
+	font-family: 'Muli', sans-serif;
+	font-size: 1em;
+}
+
+li:hover {
+	background-color: red;
 }

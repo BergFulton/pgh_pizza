@@ -265,6 +265,9 @@ var ViewModel = function() {
     }
 }
 
+
+
+
 // end ViewModel *************************************************************
 
 // comment out code not needed
