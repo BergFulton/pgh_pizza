@@ -139,10 +139,7 @@ var addFq = function(location) {
         for (var i = 0; i < frame.open.length; i++) {
           times = frame.open[i].renderedTime;
         }
-
         formattedTimeframes += frame.days + ': ' + times + '<br />';
-
-
        });
 
        // return formatted data to be used in infowindow
@@ -165,7 +162,7 @@ var addFq = function(location) {
           // Format the data and return it
           location.times = prettyHours(timeframes);
           // also show whether it is open or closed
-          location.open = venue.hours.isOpen ? 'open' : 'closed';
+          location.open = venue.hours.isOpen ? 'Open' : 'Closed';
         } else {
           // otherwise it's all n/a
           location.times = "n/a";
@@ -178,7 +175,7 @@ var addFq = function(location) {
         var fsContent = '<h3>' + location.title + '</h3>' +
                 '<p> Open now?: '+ location.open + '</p>' +
                 '<p> Hours: ' + location.times + '</p>' +
-                '<p> url: '+  location.url + '</p>' +
+                '<p> url: ' <a href=location.url>location.url</a> '</p>' +
                 '<p> Likes: ' + location.likes + '</p>';
         infowindow.setContent(fsContent)
         infowindow.open(map, location.marker)
@@ -230,7 +227,6 @@ var Pizza = function(data) {
 
     // add listener to set infowindow content and set open
     self.marker.addListener('click', function() {
-        // console.log(self)
         addFq(self);
     });
 
