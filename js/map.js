@@ -1,6 +1,6 @@
 //Global variables
 var map;
-var infowindow; // create global infowindow 
+var infowindow; // create global infowindow
 
 
 //Some pizza places- only the best! This is the model.
@@ -72,7 +72,7 @@ var pizzaLocations = [{
     'site': 'http://www.mineospizza.com',
     'cash_only': 'accepts cards',
     'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
-    'fqId': "4ad7c0ebf964a520600e21e3", 
+    'fqId': "4ad7c0ebf964a520600e21e3",
     'location': {
         lat: 40.4328888,
         lng: -79.9253663
@@ -127,60 +127,63 @@ var addFq = function(location) {
     var fsquareId = location.fqId;
     var myUrl = reqUrl + fsquareId + "?client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20160624";
 
+    function prettyHours(timeframes) {
+       // create an empty string to hold the formatted data
+       var formattedTimeframes = "";
+       var formattedHours = "";
+       var times = "";
+
+       // unpack the timeframes object and create the HTML to display it
+       timeframes.forEach(function(frame) {
+
+        for (var i = 0; i < frame.open.length; i++) {
+          times = frame.open[i].renderedTime;
+        }
+
+        formattedTimeframes += frame.days + ': ' + times + '<br />';
+
+
+       });
+
+       // return formatted data to be used in infowindow
+       return formattedTimeframes;
+    }
+
     $.ajax({
         type: "GET",
         dataType: "json",
         url: myUrl
-
     })
     .done(function(data) {
-        // set shortand for venue 
+        // set shortand for venue
         var venue = data.response.venue;
-        
-        //Get the timeframes array from the venue object
-        var timeframes = venue.hours.timeframes;
 
-        //Format the data and return it
-        // location.times = prettyHours(timeframes);
+        // unless the API thinks the hours are empty
+        if (typeof venue.hours != 'undefined') {
+          // Get the timeframes array from the venue object
+          var timeframes = venue.hours.timeframes;
+          // Format the data and return it
+          location.times = prettyHours(timeframes);
+          // also show whether it is open or closed
+          location.open = venue.hours.isOpen ? 'open' : 'closed';
+        } else {
+          // otherwise it's all n/a
+          location.times = "n/a";
+          location.open = "n/a";
+        }
 
         location.likes = venue.likes.count ? venue.likes.count : "n/a" ;
-        location.open = venue.hours.isOpen ? 'open' : 'closed';
-        // location.days = days;
-        // location.hours = hours;
         location.url = venue.url;
-            // console.log(location.hours);
-        var fsContent = '<h3>' + location.title + '</h3>' + 
+
+        var fsContent = '<h3>' + location.title + '</h3>' +
                 '<p> Open now?: '+ location.open + '</p>' +
-                // '<p> Days: ' + location.days + '</p>' +
-                '<p> Hours: ' + location.hours + '</p>' +
+                '<p> Hours: ' + location.times + '</p>' +
                 '<p> url: '+  location.url + '</p>' +
-                '<p> Likes: ' + location.likes + '</p>';          
+                '<p> Likes: ' + location.likes + '</p>';
         infowindow.setContent(fsContent)
         infowindow.open(map, location.marker)
-        console.log(venue);
     });
 }
-
-// function prettyHours(timeframes){
-//     var formatedTimeframes = "";
-
-//     timeframes.forEach(function(frame){
-//         formattedTimeframes += '<p> Days: ' + frame.days + '</p>';
-//     });
-// return formattedTimeframes;
-// }
-
-// (function() {
-//             for (var i = 0; i < venue.hours.timeframes.length; i++) {
-//                  var timeframes = venue.hours.timeframes[i];
-//                  days.push(venue.hours.timeframes[i].days);
- 
-//                  for (var j = 0; j < timeframes.open.length; j++) {
-//                      hours.push(timeframes.open[j].renderedTime);
-//                  }
-//              }
-//          })();
-
 
 /* MOVE PIZZA CONSTRUCTOR OUT OF VIEW MODEL ----------------------------------------------------*/
 
@@ -227,7 +230,7 @@ var Pizza = function(data) {
 
     // add listener to set infowindow content and set open
     self.marker.addListener('click', function() {
-        console.log(self)
+        // console.log(self)
         addFq(self);
     });
 
@@ -250,7 +253,7 @@ var Pizza = function(data) {
 var ViewModel = function() {
     var self = this;
 
-    // add variable to hold text input value 
+    // add variable to hold text input value
     self.query = ko.observable();
 
     this.pizzaList = ko.observableArray([]);
@@ -265,9 +268,6 @@ var ViewModel = function() {
     }
 }
 
-
-
-
 // end ViewModel *************************************************************
 
 // comment out code not needed
@@ -276,24 +276,20 @@ var ViewModel = function() {
             function() {
                 hideMarkers(markers);
             });
-
         //Directions search event listener
         document.getElementById('search-within-time').addEventListener('click', function() {
                 searchWithinTime();
             });
-
         //Listen for the event fired when the user selects a prediction
         //and then clicks "go". Then get more details about the place
         document.getElementById('get-pizza').
         addEventListener('click', textSearchPlaces);
-
         // //This is the function to hide all listings
         // function hideMarkers(markers) {
         //     for (var i = 0; i < markers.length; i++) {
         //         markers[i].setMap(null);
         //     }
         // }
-
         //This is the autocomplete for use in the search box to add new places
         var timeAutocomplete = new google.maps.places.Autocomplete(
             document.getElementById('pizza-search'));
@@ -301,11 +297,8 @@ var ViewModel = function() {
         //be added to above?
         var timeAutocomplete = new google.maps.places.Autocomplete(
             document.getElementById('search-within-time-text'));
-
         var searchBox = new google.maps.places.SearchBox(
             document.getElementById('pizza-search'));
-
-
         //Search for Places data based on the input of the user.
         function textSearchPlaces() {
             var bounds = map.getBounds();
@@ -320,8 +313,6 @@ var ViewModel = function() {
                 }
             });
         }
-
-
         //This function fires when the user selects a searchbox picklist
         //item. It will do a nearby search using the selected query.
         function searchBoxPlaces(searchBox) {
@@ -333,7 +324,6 @@ var ViewModel = function() {
                 window.alert('We did not find any places matching that search.');
             }
         }
-
         //This function creates markers for each place found in
         //places search.
         function createMarkersForPlaces(places) {
@@ -347,7 +337,6 @@ var ViewModel = function() {
                     anchor: new google.maps.Point(15, 15),
                     scaledSize: new google.maps.Size(25, 25)
                 };
-
                 //Create a marker for each place.
                 var marker = new google.maps.Marker({
                     map: map,
@@ -356,11 +345,9 @@ var ViewModel = function() {
                     position: place.geometry.location,
                     id: place.id
                 });
-
                 //Create a single infowindow to be used with the place detail.
                 //Allow only 1 to be open at a time.
                 var placeInfoWindow = new google.maps.InfoWindow();
-
                 //If a marker is clicked, do a place details search on
                 //it in the next function.
                 marker.addListener('click', function() {
@@ -380,16 +367,13 @@ var ViewModel = function() {
             }
             map.fitBounds(bounds);
         }
-
 }
-
      //This is the function to hide all listings
             function hideMarkers(markers) {
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
         }
-
 //This function allows the user to input a desired travel time and travel mode, and a location. It will only show places that are reachable within the desired travel duration period.
         function searchWithinTime() {
             //Initialize the distance matrix service
@@ -423,7 +407,6 @@ var ViewModel = function() {
                 });
             }
         }
-
 //This function checks the results--if the distance is less
         //than the value in the picker, then show it on the map.
         function displayMarkersWithinTime(response) {
@@ -469,9 +452,6 @@ var ViewModel = function() {
                 }
             }
         }
-
-
-
         //This function is in reponse to the user selecting "show
         //route" on one of the markers iwthin the caluclated distance.
         //This will display the route on the map
@@ -503,7 +483,6 @@ var ViewModel = function() {
                 }
             });
 }
-
 */
 
 //Draw the map. It's centered on the LatLng for Pittsburgh, PA, USA.
@@ -521,3 +500,4 @@ function initMap() {
     infowindow = new google.maps.InfoWindow();
     ko.applyBindings(new ViewModel());
 }
+
