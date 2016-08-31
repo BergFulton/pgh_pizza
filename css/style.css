@@ -9,27 +9,109 @@ h1, h2 {
 	font-family: 'Ovo', serif;
 }
 
-#map {
-	bottom: 0px;
-	height: 100%;
-	left: 362px;
-	position: absolute;
-	right: 0px;
+.constrained {
+	max-width: 95%;
 }
 
-#map-container, #map {
-	height: 800px;
-	max-width: 100%;
-	display: block;
+.bordered-top {
+	border-top: 1px #ccc solid;
+	margin-top: 1.0em;
+	padding-top: 1.0em;
+}
+
+.bordered-bottom {
+	border-bottom: 1px #ccc solid;
+	margin-bottom: 1.0em;
+	padding-bottom: 1.0em;
 }
 
 .searches {
-	background: #fff;
- 	line-height: 35px;
- 	padding: 10px 10px 30px 10px;
- 	text-align: center;
- 	width: 340px;
- 	display: block;
+	text-align: center;
+}
+
+.search-field-wrap {
+}
+
+.filter {
+	display: block;
+	margin-bottom: 1.0em;
+	width: 100%;
+}
+
+input[type="button"] {
+	max-width: 200px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media (min-width: 500px) {
+	.search-field-wrap {
+		display: flex;
+		align-items: center;
+	  	justify-content: center;
+	}
+	.filter {
+		margin: 0 0.5em;
+		width: auto;
+	}
+	input[type="button"] {
+		margin: 0;
+	}
+}
+
+#map-container {
+	height: 480px;
+	margin-bottom: 2.0em;
+	max-width: 800px;
+	width: 100%;
+}
+
+#map {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.list-wrap {
+	margin-bottom: 1.0em;
+}
+
+.locations-list {
+	list-style-type: none;
+	margin: 0 0 1.0em 0;
+	padding: 0;
+}
+
+.location {
+	margin-bottom: 0.5em;
+	padding-left: 25px;
+	position: relative;
+}
+
+.location:before {
+	content: '\1F355';
+	display: block;
+	height: 20px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 20px;
+}
+
+.location span:hover {
+	cursor: pointer;
+}
+
+@media (min-width: 600px) {
+	.list-wrap {
+		float: left;
+		margin-bottom: 0;
+		width: 30%;
+	}
+	.map-wrap {
+		float: left;
+		width: 70%;
+	}
 }
 
 .banner{
@@ -44,7 +126,6 @@ h1, h2 {
 
 
 li, .text{
-	list-style: none;
 	font-family: 'Muli', sans-serif;
 	font-size: 1em;
 }

@@ -16,51 +16,57 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row container">
-            <div class="col-xs-12 col-md-4 banner">
+    <div class="container-fluid constrained">
+        <div class="row bordered-bottom">
+            <div class="col-xs-12 banner">
                 <h1>Welcome to the Pittsburgh Pizza Map!</h1>
                 <h2>Featuring only the best independent Pittsburgh pizzas</h2>
             </div>
         </div>
-        <hr>
         <div class="row">
-            <div class="searches">
-                <span class="text">Find Pizza Within</span>
-                <select id="max-duration">
-                    <option value="10">10 min</option>
-                    <option value="15">15 min</option>
-                    <option value="30">30 min</option>
-                    <option value="60">1 hour</option>
-                </select>
-                <select id="mode">
-                    <option value="DRIVING">drive</option>
-                    <option value="WALKING">walk</option>
-                    <option value="BICYCLING">bike</option>
-                    <option value="TRANSIT">transit ride</option>
-                </select>
-                <br>
-                <span class="text">of</span>
-                <input id="search-within-time-text" type="text" placeholder="ex: Kennywood Park or 4400 Forbes Ave.">
-                <input id="search-within-time" type="button" value="Go">
+            <div class="searches bordered-bottom">
+                <h3 class="text">Find Pizza Within</h3>
+                <div class="search-field-wrap">
+                    <select class="filter" id="max-duration">
+                        <option value="10">10 min</option>
+                        <option value="15">15 min</option>
+                        <option value="30">30 min</option>
+                        <option value="60">1 hour</option>
+                    </select>
+                    <select class="filter" id="mode">
+                        <option value="DRIVING">drive</option>
+                        <option value="WALKING">walk</option>
+                        <option value="BICYCLING">bike</option>
+                        <option value="TRANSIT">transit ride</option>
+                    </select>
+                    <span class="filter" class="text">of</span>
+                    <input class="filter" id="search-within-time-text" type="text" placeholder="ex: Kennywood Park or 4400 Forbes Ave.">
+                    <input class="filter" id="search-within-time" type="button" value="Go">
+                </div>
             </div>
 
             <!-- input box added for text filter.  Use texInput binding because it automatically updates -->
             <!--  <input id="search-pizza" data-bind="textInput: query" type="text" placeholder="Filter"> -->
         </div>
         <div class="row">
-            <div class="col-xs-12 col-md-12" id="list">
-                <ul data-bind="foreach: pizzaList">
-                    <li> <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
+            <div class="list-wrap" id="list">
+                <ul class="locations-list" data-bind="foreach: pizzaList">
+                    <li class="location">
+                        <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
                     </li>
                 </ul>
                 <input id="hide-listings" type="button" value="Get aht">
             </div>
+            <div class="map-wrap">
+                <div id="map-container">
+                    <div id="map">
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12" id="map-container">
-            <div id="map">
+        <div class="row copyright bordered-top">
+            <div class="col-xs-12">
+                <p>Copyright, 2016. Tracey Berg-Fulton.</p>
             </div>
         </div>
     </div>

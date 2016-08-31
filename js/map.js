@@ -175,7 +175,7 @@ var addFq = function(location) {
         var fsContent = '<h3>' + location.title + '</h3>' +
                 '<p> Open now?: '+ location.open + '</p>' +
                 '<p> Hours: ' + location.times + '</p>' +
-                '<p> url: ' <a href=location.url>location.url</a> '</p>' +
+                '<p> url: <a href="' + location.url + '">' + location.url + '</a></p>' +
                 '<p> Likes: ' + location.likes + '</p>';
         infowindow.setContent(fsContent)
         infowindow.open(map, location.marker)
