@@ -4,9 +4,12 @@ html, body {
 	padding: 0;
 }
 
+body {
+	font-family: 'Muli', sans-serif;
+}
+
 h1, h2 {
 	text-align: center;
-	font-family: 'Ovo', serif;
 }
 
 .constrained {
@@ -124,23 +127,20 @@ input[type="button"] {
  	display: block;
 }
 
-
-li, .text{
-	font-family: 'Muli', sans-serif;
+li.text {
 	font-size: 1em;
 }
 
-h1, .text{
+h1.text {
 	font-size: 2.5em;
 }
-/*
-h2, .text{
+h2.text{
 	font-size: 2.0em;
 }
 
-h3, .text{
+h3.text{
 	font-size: 1.75em;
-}*/
+}
 
 .highlightItem:hover {
 	background-color: #fafa0c;

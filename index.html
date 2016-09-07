@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Muli|Ovo" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -25,28 +25,20 @@
         </div>
         <div class="row">
             <div class="searches bordered-bottom">
-                <h3 class="text">Find Pizza Within</h3>
+                <h3 class="text">Sort by rating:</h3>
                 <div class="search-field-wrap">
-                    <select class="filter" id="max-duration">
-                        <option value="10">10 min</option>
-                        <option value="15">15 min</option>
-                        <option value="30">30 min</option>
-                        <option value="60">1 hour</option>
+                    <select class="filter" id="ratings-filter">
+                        <option>choose one</option>
+                        <option value="10">10</option>
+                        <option value="9">9+</option>
+                        <option value="8">8+</option>
+                        <option value="7">7+</option>
+                        <option value="6">6+</option>
+                        <option value="5">5+</option>
                     </select>
-                    <select class="filter" id="mode">
-                        <option value="DRIVING">drive</option>
-                        <option value="WALKING">walk</option>
-                        <option value="BICYCLING">bike</option>
-                        <option value="TRANSIT">transit ride</option>
-                    </select>
-                    <span class="filter" class="text">of</span>
-                    <input class="filter" id="search-within-time-text" type="text" placeholder="ex: Kennywood Park or 4400 Forbes Ave.">
-                    <input class="filter" id="search-within-time" type="button" value="Go">
+                    <input class="filter" id="ratings-search-btn" type="button" value="Go">
                 </div>
             </div>
-
-            <!-- input box added for text filter.  Use texInput binding because it automatically updates -->
-            <!--  <input id="search-pizza" data-bind="textInput: query" type="text" placeholder="Filter"> -->
         </div>
         <div class="row">
             <div class="list-wrap" id="list">

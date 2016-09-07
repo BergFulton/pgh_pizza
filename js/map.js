@@ -155,6 +155,18 @@ var addFq = function(location) {
         // set shortand for venue
         var venue = data.response.venue;
 
+        console.log(venue)
+
+        var rating = venue.rating;
+
+        console.log(rating);
+
+        // dropdown has 5-10
+        // onchange event (when the user selects an option from the select box),
+        // get the value from the option (options should have a value attr)
+        // once you have that value use knockout to filter by venues that are greater than or equal to that value
+        // update the markers & the list
+
         // unless the API thinks the hours are empty
         if (typeof venue.hours != 'undefined') {
           // Get the timeframes array from the venue object
@@ -235,60 +247,14 @@ var Pizza = function(data) {
     function makeMarkerIcon(markerColor) {
         var markerImage = new google.maps.MarkerImage(
             'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' +
-            // markerColor + '|40|_|%E2%80%A2',
             markerColor + '|40|_|%E2%80%A2',
             new google.maps.Size(21, 34),
             new google.maps.Point(0, 0),
             new google.maps.Point(10, 34),
             new google.maps.Size(21, 34));
         return markerImage;
-    }
-        //Directions search event listener
-        document.getElementById('search-within-time').addEventListener('click', function() {
-                searchWithinTime();
-            });
-        //Listen for the event fired when the user selects a prediction
-        //and then clicks "go". Then get more details about the place
-        // document.getElementById('get-pizza').addEventListener('click', textSearchPlaces);
-        
-        //This is the code for the location/distance search
-        //This function allows the user to input a desired travel time and travel mode, and a location. It will only show places that are reachable within the desired travel duration period.
-        function searchWithinTime() {
-             //Initialize the distance matrix service
-            var distanceMatrixServce = new google.maps.DistanceMatrixService;
-            var address = document.getElementById('search-within-time-text').value;
-            console.log(address);
-
-            //Check to see that the field isn't blank
-            if (address == '') {
-                window.alert('Yinz gotta give me an address.');}
-          
-                //Use the distance matrix service to calcuate the duration of the routes between all markers, and the destiation set by the user. 
-                //Then put all the origins into an origin matrix.
-                var origins = [];
-                for (var i = 0; i < markers.length; i++) {
-                    origins[i] = markers[i].position;
-                }
-                var destination = address;
-                var mode = document.getElementById('mode').value;
-                // Since we have defined the origin & destination, we'll
-                // get the info for the distances between them.
-                distanceMatrixServce.getDistanceMatrix({
-                    origins: origins,
-                    destinations: [destination],
-                    travelMode: google.maps.TravelMode[mode],
-                    unitSystem: google.maps.UnitSystem.IMPERIAL,
-                }, function(response, status) {
-                    if (status !== google.maps.DistanceMatrixStatus.OK) {
-                        window.alert('Error was: ' + status);
-                    } else {
-                        displayMarkersWithinTime(response);
-                    }
-                });
-            }
-        }
-
-
+    }       
+}
 
 var ViewModel = function() {
     var self = this;
@@ -306,6 +272,8 @@ var ViewModel = function() {
     self.openWindow = function(location) {
         google.maps.event.trigger(location.marker, 'click');
     };
+
+    
 };
 
 
