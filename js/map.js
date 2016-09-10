@@ -115,9 +115,7 @@ var pizzaLocations = [{
     }
 }];
 
-/* MOVE FOURSQUARE API REQUEST OUT OF VIEW MODEL -----------------------------------------------*/
-
-// Run Foursquare venue seach for location *********************************
+// Run Foursquare venue seach for location 
 var addFq = function(location) {
     //Foursquare credentials for executing API request
     var clientID = 'HTWGIKQP10NE4YN5UTTQP5VDG5VSBGVC51PCQPG5NJCF1IG3';
