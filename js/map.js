@@ -207,14 +207,23 @@ var Pizza = function(data) {
     // add the location data so self you can create a marker with pizzaList
     this.location = data.location;
 
+    // TODO: FIGURE OUT HOW TO IMPLEMENT THIS!
+    // self.filteredItems = ko.computed(function() {
+    // var filter = this.filter().toLowerCase();
+    // if (!filter) {
+    //     return this.items();
+    // } else {
+    //     return ko.utils.arrayFilter(this.items(), function(item) {
+    //         return ko.utils.stringStartsWith(item.name().toLowerCase(), filter);
+    //     });
+    // }
+    // }, self);
+
     //Set default map marker icon color
     var defaultIcon = makeMarkerIcon('0091ff');
 
     //Set highlighted marker icon color
     var highlightedIcon = makeMarkerIcon('FFFF24');
-
-    //Set icon color for a user-submitted entry
-    var userSubIcon = makeMarkerIcon('FFA500');
 
     this.marker = new google.maps.Marker({
         position: self.location,
@@ -266,7 +275,8 @@ var ViewModel = function() {
         self.pizzaList.push(new Pizza(pizzaItem));
     });
 
-    // function to trigger marker click when list view item is clicked *********
+
+    // function to trigger marker click when list view item is clicked
     self.openWindow = function(location) {
         google.maps.event.trigger(location.marker, 'click');
     };
