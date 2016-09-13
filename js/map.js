@@ -273,7 +273,8 @@ var ViewModel = function() {
         // Loop over all Pizza objects
         self.pizzaList().forEach(function(pizzaItem) {
             // if the title contains the query value
-            if (pizzaItem.title.toLowerCase().indexOf(query) !== -1) {
+            if (pizzaItem.title.toLowerCase().indexOf(query) !== -1 || 
+                pizzaItem.address.toLowerCase().indexOf(query) !== -1) {
                 pizzaItem.showMe(true); // Show List Item
                 pizzaItem.marker.setVisible(true); // Show Map Marker
             } else {
