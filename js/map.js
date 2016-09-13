@@ -147,42 +147,41 @@ var addFq = function(location) {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: myUrl
-    })
-    .done(function(data) {
-        // set shortand for venue
-        var venue = data.response.venue;
+        url: myUrl,
+        success: function(data) {
+            var venue = data.response.venue;
+            var rating = venue.rating;
 
-        console.log(venue)
+            // unless the API thinks the hours are empty
+            if (typeof venue.hours != 'undefined') {
+              // Get the timeframes array from the venue object
+              var timeframes = venue.hours.timeframes;
+              // Format the data and return it
+              location.times = prettyHours(timeframes);
+              // also show whether it is open or closed
+              location.open = venue.hours.isOpen ? 'Open' : 'Closed';
+            } else {
+              // otherwise it's all n/a
+              location.times = "Not available";
+              location.open = "Not available";
+            }
 
-        var rating = venue.rating;
+            // Error messages for other data
+            location.likes = venue.likes.count ? venue.likes.count : "Like count not available" ;
+            location.url = venue.url ? venue.url : "No website";
 
-        // unless the API thinks the hours are empty
-        if (typeof venue.hours != 'undefined') {
-          // Get the timeframes array from the venue object
-          var timeframes = venue.hours.timeframes;
-          // Format the data and return it
-          location.times = prettyHours(timeframes);
-          // also show whether it is open or closed
-          location.open = venue.hours.isOpen ? 'Open' : 'Closed';
-        } else {
-          // otherwise it's all n/a
-          location.times = "Not available";
-          location.open = "Not available";
+            var fsContent = '<h3>' + location.title + '</h3>' +
+                    '<p> Open now?: '+ location.open + '</p>' +
+                    '<p> Hours: ' + location.times + '</p>' +
+                    '<p> url: <a href="' + location.url + '">' + location.url + '</a></p>' +
+                    '<p> Likes: ' + location.likes + '</p>';
+            infowindow.setContent(fsContent);
+            infowindow.open(map, location.marker);
+        },
+        error: function() {
+            alert("Sorry, we couldn't get more information about this location.");
         }
-
-        // Error messages for other data
-        location.likes = venue.likes.count ? venue.likes.count : "Like count not available" ;
-        location.url = venue.url ? venue.url : "No website";
-
-        var fsContent = '<h3>' + location.title + '</h3>' +
-                '<p> Open now?: '+ location.open + '</p>' +
-                '<p> Hours: ' + location.times + '</p>' +
-                '<p> url: <a href="' + location.url + '">' + location.url + '</a></p>' +
-                '<p> Likes: ' + location.likes + '</p>';
-        infowindow.setContent(fsContent);
-        infowindow.open(map, location.marker);
-    });
+    })
 };
 
 
