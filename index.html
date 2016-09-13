@@ -39,7 +39,8 @@
                         <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
                     </li>
                 </ul>
-                <input id="hide-listings" type="button" value="Get aht">
+                
+                <!--<input id="hide-listings" type="button" value="Get aht">-->
             </div>
             <div class="map-wrap">
                 <div id="map-container">
@@ -57,7 +58,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/lib/knockout-3.2.0.js"></script>
     <script src="js/map.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=AIzaSyDbhQUVvTyLIEJ-qGSCXpnA3fV1_HDJ-yo&v=3&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=AIzaSyDbhQUVvTyLIEJ-qGSCXpnA3fV1_HDJ-yo&v=3&callback=initMap" onerror="googleError()">
     </script>
     </div>
 </body>
