@@ -25,19 +25,9 @@
         </div>
         <div class="row">
             <div class="searches bordered-bottom">
-                <h3 class="text">Sort by rating:</h3>
+                <h3 class="text">Search for pizza:</h3>
                 <div class="search-field-wrap">
-                   <!--  <select class="filter" id="ratings-filter">
-                        <option>choose one</option>
-                        <option value="10">10</option>
-                        <option value="9">9+</option>
-                        <option value="8">8+</option>
-                        <option value="7">7+</option>
-                        <option value="6">6+</option>
-                        <option value="5">5+</option>
-                    </select> -->
-                    <!--TODO: add databindings to the text search  data-bind="value: filter, valueUpdate: 'afterkeydown'" -->
-                    <input class="filter" id="pizza-search-txt" type="text" placeholder="Search">
+                    <input class="filter" id="pizza-search-txt" type="text" placeholder="Search" data-bind="textInput: query">
                     <input class="filter" id="ratings-search-btn" type="submit" value="Go">
                 </div>
             </div>
@@ -45,7 +35,7 @@
         <div class="row">
             <div class="list-wrap" id="list">
                 <ul class="locations-list" data-bind="foreach: pizzaList">
-                    <li class="location">
+                    <li class="location" data-bind="visible: showMe">
                         <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
                     </li>
                 </ul>
