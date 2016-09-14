@@ -34,7 +34,8 @@ var pizzaLocations = [{
     'phone': '724-266-3904',
     'site': '',
     'cash_only': 'cash only',
-    'inside_info': "By the slice, and know how many slices you need before you hit the door. Cash only.",
+    'inside_info': "By the slice, and know how many slices you need before you 
+        hit the door. Cash only.",
     'fqId': "4b9ac8adf964a52048d535e3",
     'location': {
         lat: 40.5918369,
@@ -59,7 +60,8 @@ var pizzaLocations = [{
     'phone': '412-521-9973',
     'site': 'http://www.aiellospizza.com',
     'cash_only': 'accepts cards',
-    'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
+    'inside_info': "Because someone will ask you: Aiello's or Mineo's? 
+        And you'll have to pick a side. Choose wisely.",
     'fqId': "4aa6cafdf964a520ff4a20e3",
     'location': {
         lat: 40.4332582,
@@ -71,7 +73,8 @@ var pizzaLocations = [{
     'phone': '412-521-9864',
     'site': 'http://www.mineospizza.com',
     'cash_only': 'accepts cards',
-    'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
+    'inside_info': "Because someone will ask you: Aiello's or Mineo's? 
+        And you'll have to pick a side. Choose wisely.",
     'fqId': "4ad7c0ebf964a520600e21e3",
     'location': {
         lat: 40.4328888,
@@ -83,7 +86,8 @@ var pizzaLocations = [{
     'phone': '412-362-7725',
     'site': 'http://www.spakbrothers.com',
     'cash_only': 'accepts cards',
-    'inside_info': "Need some seitan wings with your pizza? Plays Fugazi's 'Waiting Room' as their hold music.",
+    'inside_info': "Need some seitan wings with your pizza? Plays Fugazi's 
+            'Waiting Room' as their hold music.",
     'fqId': "4ad7af38f964a520a50d21e3",
     'location': {
         lat: 40.4650793,
@@ -107,7 +111,8 @@ var pizzaLocations = [{
     'phone': '412-787-2959',
     'site': 'http://www.julianosonline.com',
     'cash_only': 'accepts cards',
-    'inside_info': "A family joint with great pasta AND pizza. You want the chunky sauce.",
+    'inside_info': "A family joint with great pasta AND pizza. You want 
+        the chunky sauce.",
     'fqId': "4b6a08a3f964a5201fc32be3",
     'location': {
         lat: 40.4502136,
@@ -173,10 +178,11 @@ var addFq = function(location) {
             var fsContent = '<h3>' + location.title + '</h3>' +
                     '<p> Open now?: '+ location.open + '</p>' +
                     '<p> Phone: '+ location.phone + '</p>' +
-                    '<p> url: <a href="' + location.url + '">' + location.url + '</a></p>' +
+                    '<p> url: <a href="' + location.url + '">' + location.url + 
+                        '</a></p>' +
                     '<p> Hours: ' + location.times + '</p>' +
                     '<p> Foursquare Likes: ' + location.likes + '</p>' +
-                    '<p class="content-attribution"> Data provided by Foursquare </p>';
+                    '<p class="content-attribution">Data provided by Foursquare</p>';
             infowindow.setContent(fsContent);
             infowindow.open(map, location.marker);
         },
@@ -216,7 +222,8 @@ var Pizza = function(data) {
     // To add the marker to the map, call setMap();
     self.marker.setMap(map);
 
-    //Two event listeners - one for mouseover, one for mouseout- changes colors of icon.
+    //Two event listeners - one for mouseover, one for mouseout-
+    //changes colors of icon.
     self.marker.addListener('mouseover', function() {
         this.setIcon(highlightedIcon);
     });
@@ -243,7 +250,8 @@ var Pizza = function(data) {
         return markerImage;
     }
 
-    // This is bound to each location object in the HTML file using the Visible Binding
+    // This is bound to each location object in the HTML file 
+    //using the Visible Binding
     this.showMe = ko.observable(true); // initially set visible
     //this.showQuote = ko.observable(false) //initially set invisible
 }
@@ -281,7 +289,7 @@ var ViewModel = function() {
 
 
 
-    // function to trigger marker click when list view item is clicked *********
+    // function to trigger marker click when list view item is clicked 
     self.openWindow = function(location) {
         google.maps.event.trigger(location.marker, 'click');
     };    
