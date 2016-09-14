@@ -15,7 +15,7 @@ Yinz can fork or clone this repo, then open up `index.html` and that's that.
 ###Who helped yinz with this?
 This project was made possible through the help of Udacity mentors Sarah Maris, Ryan Vrba, Karol, and many others in the Udacity program. 
 
-Help also came from [Pat Fulton](http://www.github.com.patrickfulton).
+Help also came from [Pat Fulton](http://www.github.com/pfulton).
 
 Also very useful was [this blog post](http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html) from Ryan and Knockmeout.net and the Knockout.js documentation on [the visible binding](http://knockoutjs.com/documentation/visible-binding.html).
 
