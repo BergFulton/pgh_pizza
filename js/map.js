@@ -245,6 +245,7 @@ var Pizza = function(data) {
 
     // This is bound to each location object in the HTML file using the Visible Binding
     this.showMe = ko.observable(true); // initially set visible
+    //this.showQuote = ko.observable(false) //initially set invisible
 }
 
 var ViewModel = function() {
