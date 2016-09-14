@@ -172,9 +172,11 @@ var addFq = function(location) {
 
             var fsContent = '<h3>' + location.title + '</h3>' +
                     '<p> Open now?: '+ location.open + '</p>' +
-                    '<p> Hours: ' + location.times + '</p>' +
+                    '<p> Phone: '+ location.phone + '</p>' +
                     '<p> url: <a href="' + location.url + '">' + location.url + '</a></p>' +
-                    '<p> Likes: ' + location.likes + '</p>';
+                    '<p> Hours: ' + location.times + '</p>' +
+                    '<p> Foursquare Likes: ' + location.likes + '</p>' +
+                    '<p class="content-attribution"> Data provided by Foursquare </p>';
             infowindow.setContent(fsContent);
             infowindow.open(map, location.marker);
         },

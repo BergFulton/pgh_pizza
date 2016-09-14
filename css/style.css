@@ -145,3 +145,8 @@ h3.text{
 .highlightItem:hover {
 	background-color: #fafa0c;
 }
+
+.content-attribution {
+	font-style: italic;
+	font-size: 1em;
+}
