@@ -10,7 +10,8 @@ So we decided that we weren't going to be jag offs, and that we were going to sh
 This was made using that Google Maps API and the Foursquare API to provide yinz with up to date information on when and where yinz can get pizza. 
 
 ###How do I use it? 
-Yinz can fork or clone this repo, then open up `index.html` and that's that. 
+You can check it aht over on my [GitHub pages site](https://bergfulton.github.io/pgh_pizza/), or 
+yinz can fork or clone this repo, then open up `index.html` and that's that. 
 
 ###Who helped yinz with this?
 This project was made possible through the help of Udacity mentors Sarah Maris, Ryan Vrba, Karol, and many others in the Udacity program. 
