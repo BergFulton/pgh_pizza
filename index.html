@@ -27,7 +27,7 @@
             <div class="searches bordered-bottom">
                 <h3 class="text">Search for pizza:</h3>
                 <div class="search-field-wrap">
-                    <input class="filter" id="pizza-search-txt" type="text" placeholder="Search" data-bind="textInput: query">
+                    <input class="filter" id="pizza-search-txt" type="text" placeholder="Ex: Franks, or Ambridge" data-bind="textInput: query">
                     <input class="filter" id="ratings-search-btn" type="submit" value="Go">
                 </div>
             </div>
@@ -37,10 +37,9 @@
                 <ul class="locations-list" data-bind="foreach: pizzaList">
                     <li class="location" data-bind="visible: showMe">
                         <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
-                    </li>
+<!--                         <span class="insider-quote" data-bind="visible: showQuote"></span>
+ -->                    </li>
                 </ul>
-                
-                <!--<input id="hide-listings" type="button" value="Get aht">-->
             </div>
             <div class="map-wrap">
                 <div id="map-container">

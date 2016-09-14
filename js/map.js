@@ -270,6 +270,7 @@ var ViewModel = function() {
                 pizzaItem.address.toLowerCase().indexOf(query) !== -1) {
                 pizzaItem.showMe(true); // Show List Item
                 pizzaItem.marker.setVisible(true); // Show Map Marker
+                // pizzaItem.inside_info.setVisible(true);
             } else {
                 pizzaItem.showMe(false); // Hide List item
                 pizzaItem.marker.setVisible(false); // Hide Map Marker
