@@ -34,8 +34,7 @@ var pizzaLocations = [{
     'phone': '724-266-3904',
     'site': '',
     'cash_only': 'cash only',
-    'inside_info': "By the slice, and know how many slices you need before you 
-        hit the door. Cash only.",
+    'inside_info': "By the slice, and know how many slices you need before you hit the door. Cash only.",
     'fqId': "4b9ac8adf964a52048d535e3",
     'location': {
         lat: 40.5918369,
@@ -60,8 +59,7 @@ var pizzaLocations = [{
     'phone': '412-521-9973',
     'site': 'http://www.aiellospizza.com',
     'cash_only': 'accepts cards',
-    'inside_info': "Because someone will ask you: Aiello's or Mineo's? 
-        And you'll have to pick a side. Choose wisely.",
+    'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
     'fqId': "4aa6cafdf964a520ff4a20e3",
     'location': {
         lat: 40.4332582,
@@ -73,8 +71,7 @@ var pizzaLocations = [{
     'phone': '412-521-9864',
     'site': 'http://www.mineospizza.com',
     'cash_only': 'accepts cards',
-    'inside_info': "Because someone will ask you: Aiello's or Mineo's? 
-        And you'll have to pick a side. Choose wisely.",
+    'inside_info': "Because someone will ask you: Aiello's or Mineo's? And you'll have to pick a side. Choose wisely.",
     'fqId': "4ad7c0ebf964a520600e21e3",
     'location': {
         lat: 40.4328888,
@@ -86,8 +83,7 @@ var pizzaLocations = [{
     'phone': '412-362-7725',
     'site': 'http://www.spakbrothers.com',
     'cash_only': 'accepts cards',
-    'inside_info': "Need some seitan wings with your pizza? Plays Fugazi's 
-            'Waiting Room' as their hold music.",
+    'inside_info': "Need some seitan wings with your pizza? Plays Fugazi's 'Waiting Room' as their hold music.",
     'fqId': "4ad7af38f964a520a50d21e3",
     'location': {
         lat: 40.4650793,
@@ -111,8 +107,7 @@ var pizzaLocations = [{
     'phone': '412-787-2959',
     'site': 'http://www.julianosonline.com',
     'cash_only': 'accepts cards',
-    'inside_info': "A family joint with great pasta AND pizza. You want 
-        the chunky sauce.",
+    'inside_info': "A family joint with great pasta AND pizza. You want the chunky sauce.",
     'fqId': "4b6a08a3f964a5201fc32be3",
     'location': {
         lat: 40.4502136,
@@ -189,7 +184,7 @@ var addFq = function(location) {
         error: function() {
             alert("Sorry, we couldn't get more information about this location.");
         }
-    })
+    });
 };
 
 
@@ -235,6 +230,16 @@ var Pizza = function(data) {
     // add listener to set infowindow content and set open
     self.marker.addListener('click', function() {
         addFq(self);
+        // add an animation on the click event
+        // https://developers.google.com/maps/documentation/javascript/examples/marker-animations
+        if (this.getAnimation() !== null) {
+          this.setAnimation(null);
+        } else {
+          this.setAnimation(google.maps.Animation.BOUNCE);
+        }
+        // make the marker stop bouncing after two bounces.
+        // http://stackoverflow.com/a/7832086/6554094
+        setTimeout(function(){ self.marker.setAnimation(null); }, 1400);
     });
 
 
@@ -254,7 +259,7 @@ var Pizza = function(data) {
     //using the Visible Binding
     this.showMe = ko.observable(true); // initially set visible
     //this.showQuote = ko.observable(false) //initially set invisible
-}
+};
 
 var ViewModel = function() {
     var self = this;
@@ -287,8 +292,6 @@ var ViewModel = function() {
         });
     });
 
-
-
     // function to trigger marker click when list view item is clicked 
     self.openWindow = function(location) {
         google.maps.event.trigger(location.marker, 'click');
@@ -316,4 +319,3 @@ function initMap() {
 function googleError(){
     alert("Google Has An Error!");
 }
-

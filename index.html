@@ -7,8 +7,6 @@
     <title>Pittsburgh Pizza Map!</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Muli|Ovo" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
@@ -37,7 +35,8 @@
                 <ul class="locations-list" data-bind="foreach: pizzaList">
                     <li class="location" data-bind="visible: showMe">
                         <span data-bind="text: title, click: $parent.openWindow" class="highlightItem"></span>
-<!--                         <span class="insider-quote" data-bind="visible: showQuote"></span>
+<!--This is for a future enhancement                          
+<span class="insider-quote" data-bind="visible: showQuote"></span>
  -->                    </li>
                 </ul>
             </div>
@@ -55,6 +54,7 @@
         </div>
     </div>
     <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/lib/knockout-3.2.0.js"></script>
     <script src="js/map.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=AIzaSyDbhQUVvTyLIEJ-qGSCXpnA3fV1_HDJ-yo&v=3&callback=initMap" onerror="googleError()">
